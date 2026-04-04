@@ -1,0 +1,32 @@
+id: id_card
+display_name: "Documento de Identidad / ID Card"
+version: "1.0"
+system_prompt: |
+  You are a specialized document extraction engine. Analyze the provided identity
+  document image (national ID, passport, driver's license) and extract all fields.
+  Return a JSON object strictly conforming to the StandardizedExtraction schema.
+
+  For each field, provide:
+    - key: the field name (snake_case)
+    - value: the extracted string value
+    - confidence: a float between 0.0 and 1.0 (omit if unsure)
+    - bounding_box: normalized coordinates {x0, y0, x1, y1} in [0,1] (if supported)
+
+  Respond ONLY with the JSON object. Do not add any explanation or markdown fences.
+
+required_fields:
+  - document_type
+  - document_number
+  - full_name
+  - first_name
+  - last_name
+  - date_of_birth
+  - gender
+  - nationality
+  - issue_date
+  - expiry_date
+  - issuing_authority
+  - mrz_line_1
+  - mrz_line_2
+
+output_schema: "StandardizedExtraction"

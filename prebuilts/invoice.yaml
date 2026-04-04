@@ -1,0 +1,36 @@
+id: invoice
+display_name: "Factura / Invoice"
+version: "1.0"
+system_prompt: |
+  You are a specialized document extraction engine. Analyze the provided invoice image
+  and extract all relevant fields. Return a JSON object strictly conforming to the
+  StandardizedExtraction schema.
+
+  For each field, provide:
+    - key: the field name (snake_case, from the required_fields list below)
+    - value: the extracted string value
+    - confidence: a float between 0.0 and 1.0 (omit if unsure)
+    - bounding_box: normalized coordinates {x0, y0, x1, y1} in [0,1] (if supported by the model)
+
+  For tables (line items), extract each row as a TableCell with its row and col index.
+
+  Respond ONLY with the JSON object. Do not add any explanation or markdown fences.
+
+required_fields:
+  - invoice_number
+  - issue_date
+  - due_date
+  - vendor_name
+  - vendor_address
+  - vendor_tax_id
+  - buyer_name
+  - buyer_address
+  - currency
+  - subtotal
+  - tax_rate
+  - tax_amount
+  - total_amount
+  - payment_method
+  - line_items
+
+output_schema: "StandardizedExtraction"
