@@ -69,12 +69,10 @@ with col_target:
 # ── Extraction Button ─────────────────────────────────────────────────────────
 st.divider()
 if st.button("🚀 Extract", type="primary", disabled=uploaded_file is None):
-    from demo.components.uploader import encode_document
-    from demo.components.bbox_renderer import render_bboxes
     from demo.components.comparison_panel import show_comparison
+    from demo.components.uploader import encode_document
 
     with st.spinner("Extracting..."):
-        import base64
         import httpx
 
         doc_b64 = encode_document(uploaded_file)

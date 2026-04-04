@@ -357,10 +357,10 @@ document_epic_extract/
 - [x] **Análisis de seguridad inicial** documentado (amenazas, controles mínimos y límites de esta fase).
 
 ### Fase 1 — Fundación y Core
-- [ ] Configuración del repositorio y Docker Compose base.
-- [ ] Definición estricta de los esquemas Pydantic (`StandardizedExtraction`).
-- [ ] Endpoint `POST /extract` funcional con respuesta mock.
-- [ ] CI/CD básico (GitHub Actions: lint + tests).
+- [x] Configuración del repositorio y Docker Compose base.
+- [x] Definición estricta de los esquemas Pydantic (`StandardizedExtraction`).
+- [x] Endpoint `POST /extract` funcional con respuesta mock.
+- [x] CI/CD básico (GitHub Actions: lint + tests).
 
 ### Fase 2 — Adaptadores Deterministas
 - [ ] Implementación del `AWSTextractAdapter`.

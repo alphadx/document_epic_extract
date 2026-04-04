@@ -2,9 +2,9 @@
 
 from __future__ import annotations
 
-from api.schemas.request import ExtractionRequest
-from api.schemas.response import BoundingBox, ExtractedField, ExtractedTable, StandardizedExtraction
 from adapters.base import BaseAdapter
+from api.schemas.request import ExtractionRequest
+from api.schemas.response import BoundingBox, StandardizedExtraction
 
 
 class AWSTextractAdapter(BaseAdapter):

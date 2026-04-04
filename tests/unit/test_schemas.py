@@ -7,9 +7,7 @@ from api.schemas.request import EngineConfig, ExtractionRequest, ExtractionTarge
 from api.schemas.response import (
     BoundingBox,
     ExtractedField,
-    ExtractedTable,
     StandardizedExtraction,
-    TableCell,
 )
 
 
