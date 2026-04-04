@@ -1,0 +1,34 @@
+id: bank_statement
+display_name: "Estado de Cuenta Bancario / Bank Statement"
+version: "1.0"
+system_prompt: |
+  You are a specialized document extraction engine. Analyze the provided bank statement
+  image or PDF page and extract all relevant fields and transaction rows.
+  Return a JSON object strictly conforming to the StandardizedExtraction schema.
+
+  For each field, provide:
+    - key: the field name (snake_case)
+    - value: the extracted string value
+    - confidence: a float between 0.0 and 1.0 (omit if unsure)
+    - bounding_box: normalized coordinates {x0, y0, x1, y1} in [0,1] (if supported)
+
+  For the transactions table, extract each row with columns: date, description,
+  debit, credit, balance.
+
+  Respond ONLY with the JSON object. Do not add any explanation or markdown fences.
+
+required_fields:
+  - bank_name
+  - account_holder
+  - account_number
+  - account_type
+  - currency
+  - statement_period_start
+  - statement_period_end
+  - opening_balance
+  - closing_balance
+  - total_debits
+  - total_credits
+  - transactions
+
+output_schema: "StandardizedExtraction"

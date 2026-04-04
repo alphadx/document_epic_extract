@@ -1,0 +1,39 @@
+id: customs_declaration
+display_name: "Declaración Aduanera / Customs Declaration"
+version: "1.0"
+system_prompt: |
+  You are a specialized document extraction engine. Analyze the provided customs
+  declaration document image and extract all relevant fields.
+  Return a JSON object strictly conforming to the StandardizedExtraction schema.
+
+  For each field, provide:
+    - key: the field name (snake_case)
+    - value: the extracted string value
+    - confidence: a float between 0.0 and 1.0 (omit if unsure)
+    - bounding_box: normalized coordinates {x0, y0, x1, y1} in [0,1] (if supported)
+
+  Respond ONLY with the JSON object. Do not add any explanation or markdown fences.
+
+required_fields:
+  - declaration_number
+  - declaration_date
+  - declarant_name
+  - declarant_tax_id
+  - importer_name
+  - exporter_name
+  - country_of_origin
+  - country_of_destination
+  - port_of_entry
+  - transport_mode
+  - total_gross_weight_kg
+  - total_net_weight_kg
+  - total_packages
+  - incoterms
+  - currency
+  - fob_value
+  - cif_value
+  - duties_and_taxes
+  - hs_codes
+  - goods_description
+
+output_schema: "StandardizedExtraction"

@@ -1,0 +1,136 @@
+# OmniExtract Gateway — Dynamic Model Registry
+#
+# Add new models via Pull Request. No code changes required.
+# Fields:
+#   id:             Model identifier used in ExtractionRequest.engine_config.model
+#   vision:         Whether the model supports image/document input
+#   context_window: Maximum context tokens
+#   requires_gpu:   Only relevant for provider: local
+#
+# To add a new provider, add an entry under `providers:` following the same schema.
+
+providers:
+  anthropic:
+    models:
+      - id: claude-3-5-sonnet-20241022
+        vision: true
+        context_window: 200000
+      - id: claude-3-7-sonnet-20250219
+        vision: true
+        context_window: 200000
+      - id: claude-opus-4-5
+        vision: true
+        context_window: 200000
+      - id: claude-haiku-3-5
+        vision: true
+        context_window: 200000
+
+  openai:
+    models:
+      - id: gpt-4o
+        vision: true
+        context_window: 128000
+      - id: gpt-4o-mini
+        vision: true
+        context_window: 128000
+      - id: gpt-4.1
+        vision: true
+        context_window: 1000000
+      - id: o3
+        vision: true
+        context_window: 200000
+      - id: o4-mini
+        vision: true
+        context_window: 200000
+
+  google:
+    models:
+      - id: gemini-2.0-flash
+        vision: true
+        context_window: 1000000
+      - id: gemini-2.5-pro
+        vision: true
+        context_window: 1000000
+      - id: gemini-2.5-flash
+        vision: true
+        context_window: 1000000
+
+  deepseek:
+    models:
+      - id: deepseek-v3
+        vision: false
+        context_window: 64000
+      - id: deepseek-r1
+        vision: false
+        context_window: 64000
+
+  qwen:
+    models:
+      - id: qwen2.5-vl-72b-instruct
+        vision: true
+        context_window: 128000
+      - id: qwen2.5-vl-7b-instruct
+        vision: true
+        context_window: 128000
+      - id: qwen3-235b-a22b
+        vision: false
+        context_window: 128000
+
+  mistral:
+    models:
+      - id: mistral-large-latest
+        vision: false
+        context_window: 128000
+      - id: pixtral-large-latest
+        vision: true
+        context_window: 128000
+      - id: mistral-small-latest
+        vision: false
+        context_window: 128000
+
+  meta:
+    models:
+      - id: llama-3.2-90b-vision-instruct
+        vision: true
+        context_window: 128000
+      - id: llama-3.2-11b-vision-instruct
+        vision: true
+        context_window: 128000
+      - id: llama-3.3-70b-instruct
+        vision: false
+        context_window: 128000
+
+  microsoft:
+    models:
+      - id: phi-4
+        vision: false
+        context_window: 16000
+      - id: phi-4-multimodal-instruct
+        vision: true
+        context_window: 128000
+
+  cohere:
+    models:
+      - id: command-r-plus-08-2024
+        vision: false
+        context_window: 128000
+
+  ai21:
+    models:
+      - id: jamba-1.5-large
+        vision: false
+        context_window: 256000
+      - id: jamba-1.5-mini
+        vision: false
+        context_window: 256000
+
+  local:
+    models:
+      - id: smolvlm2-2.2b-instruct
+        vision: true
+        context_window: 16000
+        requires_gpu: false
+      - id: smolvlm2-500m-instruct
+        vision: true
+        context_window: 8000
+        requires_gpu: false

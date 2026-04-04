@@ -1,0 +1,31 @@
+id: receipt
+display_name: "Boleta / Recibo / Receipt"
+version: "1.0"
+system_prompt: |
+  You are a specialized document extraction engine. Analyze the provided receipt image
+  and extract all relevant fields. Return a JSON object strictly conforming to the
+  StandardizedExtraction schema.
+
+  For each field, provide:
+    - key: the field name (snake_case)
+    - value: the extracted string value
+    - confidence: a float between 0.0 and 1.0 (omit if unsure)
+    - bounding_box: normalized coordinates {x0, y0, x1, y1} in [0,1] (if supported)
+
+  Respond ONLY with the JSON object. Do not add any explanation or markdown fences.
+
+required_fields:
+  - receipt_number
+  - date
+  - time
+  - merchant_name
+  - merchant_address
+  - cashier
+  - items
+  - subtotal
+  - tax_amount
+  - total_amount
+  - payment_method
+  - change_given
+
+output_schema: "StandardizedExtraction"
