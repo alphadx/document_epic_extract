@@ -251,12 +251,20 @@ streamlit run demo/app.py
 
 Ver [plan.md](plan.md) para el plan completo de fases.
 
+- **Fase 0** — Base del repositorio: licencia, convenciones, DoD y análisis inicial de seguridad
 - **Fase 1** — Fundación: FastAPI core + Pydantic schemas *(en progreso)*
 - **Fase 2** — Adaptadores OCR Cloud (AWS, GCP, Azure)
 - **Fase 3** — Meta-Gateway LLM + LiteLLM + Prebuilt Engine
 - **Fase 4** — Ejecución Local (SmolVLM2)
 - **Fase 5** — Demo Front-end (Streamlit)
 - **Fase 6** — Documentación & Open Source Release
+
+### Cierre de Hito 0 (resumen)
+
+- Licencia OSS explícita y visible.
+- Documentación base del proyecto y guía de contribución publicadas.
+- Definition of Done (DoD) de Hito 0 documentada en `plan.md`.
+- Controles mínimos de seguridad iniciales documentados en `plan.md`.
 
 ---
 

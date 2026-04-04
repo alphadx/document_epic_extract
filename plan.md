@@ -12,6 +12,11 @@
 
 El gateway trata a proveedores deterministas (AWS Textract, Azure Document Intelligence, GCP Document AI), modelos locales (SmolVLM2) y una extensa red de LLMs comerciales y de código abierto como **"Motores de Inferencia Intercambiables"**. El núcleo del sistema es agnóstico al motor; su responsabilidad es enrutar, inyectar contexto (mediante plantillas *prebuilt*) y estandarizar la salida en un esquema JSON predecible.
 
+### Estado de Hitos (resumen)
+
+- **Hito 0 (Kickoff de repositorio):** base legal y editorial del proyecto (licencia OSS, README/CONTRIBUTING y lineamientos iniciales).
+- **Hito 1+:** implementación incremental de API core, adaptadores y demo.
+
 ---
 
 ## 2. Arquitectura del Sistema (Docker & Topología)
@@ -343,6 +348,14 @@ document_epic_extract/
 
 ## 8. Plan de Ejecución y Milestones
 
+### Fase 0 — Kickoff, Análisis y Base del Repositorio (Cierre requerido)
+- [x] Licencia OSS explícita en el repositorio (`LICENSE`).
+- [x] Roadmap visible con fases/hitos en `README.md`.
+- [x] Documento de arquitectura inicial (`plan.md`) con alcance general.
+- [x] Guía de contribución base (`CONTRIBUTING.md`).
+- [x] **Definition of Done (DoD) de Hito 0** documentada y validada por el equipo.
+- [x] **Análisis de seguridad inicial** documentado (amenazas, controles mínimos y límites de esta fase).
+
 ### Fase 1 — Fundación y Core
 - [ ] Configuración del repositorio y Docker Compose base.
 - [ ] Definición estricta de los esquemas Pydantic (`StandardizedExtraction`).
@@ -393,6 +406,39 @@ document_epic_extract/
 | **YAML para prebuilts** | JSON, TOML, DB-only | Legible por humanos, fácil de editar por la comunidad via PR. |
 | **Docker Compose** | Kubernetes, Docker Swarm | Simplicidad para desarrollo local y despliegues small-scale. |
 | **Redis para caché** | Memcached, SQLite | Soporte nativo para TTL, estructuras de datos complejas y pub/sub para colas. |
+
+---
+
+## 10. Seguridad Inicial (Hito 0 — Análisis)
+
+### 10.1. Objetivo de seguridad en esta fase
+
+Definir una base de seguridad mínima para desarrollo y colaboración, sin introducir todavía controles de infraestructura avanzados (WAF, KMS multi-tenant, SIEM completo).
+
+### 10.2. Superficie de riesgo identificada
+
+- Exposición accidental de API keys en commits, logs o capturas de pantalla.
+- Uso de credenciales de alto privilegio en entornos de desarrollo.
+- Inyección de prompts no controlados en templates custom.
+- Fuga de datos sensibles en payloads de pruebas/documentación.
+
+### 10.3. Controles mínimos exigidos para cerrar Hito 0
+
+- No versionar secretos en git (`.env` fuera de control de versiones).
+- Uso de credenciales separadas por entorno (dev/stage/prod) y de privilegio mínimo.
+- Documentar manejo temporal de API keys en demo/sesión (sin persistencia duradera).
+- Evitar registrar documentos completos o secretos en logs de aplicación por defecto.
+- Declarar explícitamente que este hito es de análisis y baseline documental (no hardening total).
+
+### 10.4. Fuera de alcance de Hito 0
+
+- Rotación automatizada de secretos.
+- Cifrado de datos en reposo con gestión centralizada de llaves.
+- Auditoría centralizada y alerting de seguridad en tiempo real.
+
+### 10.5. Criterio de salida hacia Fase 1
+
+Solo avanzar a Fase 1 cuando el equipo confirme que esta sección sigue vigente y que no hay bloqueantes de seguridad básica para desarrollo.
 
 ---
 
