@@ -1,0 +1,8 @@
+{
+  "extract_post_200_ref": "#/components/schemas/StandardizedExtraction",
+  "prebuilts_custom_has_422": true,
+  "prebuilts_custom_post_200_ref": "#/components/schemas/CustomPrebuiltResponse",
+  "prebuilts_custom_post_request_ref": "#/components/schemas/CustomPrebuiltRequest",
+  "prebuilts_get_200_items_ref": "#/components/schemas/PrebuiltMetadata",
+  "registry_models_has_200": true
+}

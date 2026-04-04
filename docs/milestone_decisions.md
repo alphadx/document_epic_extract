@@ -80,3 +80,31 @@ Estado: Cerrado
 - Riesgos pendientes: implementación real de adaptadores OCR/LLM/local (Fases 2–4).
 - Siguiente hito habilitado: Fase 2 — Adaptadores deterministas.
 
+
+---
+
+## Hito 3 — Meta-Gateway LLM + LiteLLM + Prebuilt Engine
+
+Fecha de actualización: 2026-04-04  
+Estado: Cerrado técnicamente
+
+### Decisiones tomadas
+
+1. **Definir DoD explícito para evitar cierre parcial del hito**
+   - **Qué se decidió:** formalizar checklist de cierre en `docs/hito3_checklist.md` con criterios técnicos, pruebas y documentación.
+   - **Por qué:** reducir ambigüedad sobre qué significa “terminar Hito 3”.
+   - **Alternativas consideradas:** gestionar avances sólo en conversaciones/PRs sin checklist persistente.
+   - **Impacto / trade-offs:** mayor claridad y trazabilidad; requiere mantener checklist actualizado en cada avance.
+
+2. **Mantener el hito en progreso hasta completar hardening e integración endpoint**
+   - **Qué se decidió:** mantener el estado del hito como “En progreso” aunque el `LiteLLMVisionAdapter` ya tenga una implementación funcional inicial.
+   - **Por qué:** aún faltan timeouts/límites e integración del endpoint con `provider=llm_router` para declarar cierre total.
+   - **Alternativas consideradas:** cerrar el hito al completar solo la implementación base del adapter.
+   - **Impacto / trade-offs:** cronograma más estricto, pero mejor calidad de salida y menor retrabajo.
+
+### Evidencia parcial
+
+- PR(s): actualización documental de ejecución de Hito 3 + implementación funcional inicial del adapter LiteLLM con hardening básico (timeouts/límites) y prueba de integración del endpoint.
+- Checks ejecutados: `ruff check .`, `pytest -q`.
+- Riesgos pendientes: monitoreo en producción de variabilidad por proveedor LLM.
+- Siguiente hito habilitado: Fase 4 — Ejecución Local (SmolVLM2).

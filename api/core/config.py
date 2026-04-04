@@ -27,5 +27,12 @@ class Settings(BaseSettings):
     # Default timeouts (seconds)
     http_timeout: int = 60
 
+    # LLM adapter safety defaults
+    llm_max_tokens: int = 4000
+    llm_max_retries: int = 2
+    llm_retry_backoff_ms: int = 150
+    llm_circuit_breaker_threshold: int = 5
+    llm_circuit_breaker_cooldown_ms: int = 10000
+
 
 settings = Settings()

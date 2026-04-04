@@ -44,3 +44,65 @@ Return the full model registry grouped by provider.
 ### `GET /health`
 
 Health check endpoint.
+
+## Ejemplo LLM (`provider=llm_router`)
+
+### Request
+
+```json
+{
+  "document": "<base64_o_url>",
+  "engine_config": {
+    "provider": "llm_router",
+    "model": "gpt-4o",
+    "api_keys": {
+      "api_key": "<SECRET>"
+    }
+  },
+  "extraction_target": {
+    "document_type": "invoice",
+    "custom_fields": ["invoice_number", "total_amount"]
+  }
+}
+```
+
+### Response (estándar)
+
+```json
+{
+  "raw_text": "Invoice #123 ...",
+  "fields": [
+    {
+      "key": "invoice_number",
+      "value": "123",
+      "confidence": 0.98,
+      "bounding_box": {
+        "x0": 0.1,
+        "y0": 0.2,
+        "x1": 0.3,
+        "y1": 0.25
+      }
+    }
+  ],
+  "tables": [],
+  "engine_used": "llm_router:gpt-4o",
+  "processing_time_ms": 142.55
+}
+```
+
+
+### Notas operativas del adapter LLM
+
+- `custom_fields` (si se envía) tiene prioridad sobre `required_fields` del prebuilt.
+- El adapter filtra claves reservadas en `api_keys` para evitar sobreescritura de `model/messages/timeout/max_tokens`.
+- El request a LiteLLM fuerza `response_format={"type":"json_object"}` para mejorar consistencia.
+
+## Snapshot de firma OpenAPI
+
+Para regenerar la firma compacta usada por los tests de contrato:
+
+```bash
+make openapi-signature
+```
+
+Esto actualiza `tests/fixtures/openapi_signature.json`.

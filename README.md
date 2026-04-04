@@ -251,11 +251,12 @@ streamlit run demo/app.py
 
 Ver [plan.md](plan.md) para el plan completo de fases.
 Para trazabilidad de decisiones por hito, ver [docs/milestone_decisions.md](docs/milestone_decisions.md).
+Para checklist operativo de Fase 3 (LiteLLM + Prebuilt Engine), ver [docs/hito3_checklist.md](docs/hito3_checklist.md).
 
 - **Fase 0** — Base del repositorio: licencia, convenciones, DoD y análisis inicial de seguridad
 - **Fase 1** — Fundación: FastAPI core + Pydantic schemas *(completada)*
 - **Fase 2** — Adaptadores OCR Cloud (AWS, GCP, Azure)
-- **Fase 3** — Meta-Gateway LLM + LiteLLM + Prebuilt Engine
+- **Fase 3** — Meta-Gateway LLM + LiteLLM + Prebuilt Engine *(en progreso: adapter base + tests)*
 - **Fase 4** — Ejecución Local (SmolVLM2)
 - **Fase 5** — Demo Front-end (Streamlit)
 - **Fase 6** — Documentación & Open Source Release
@@ -280,6 +281,19 @@ Comandos de verificación del hito:
 ruff check .
 pytest -q
 ```
+
+### Avance de Hito 3 (parcial)
+
+- `LiteLLMVisionAdapter` implementado con parseo robusto de JSON y manejo de errores.
+- Pruebas unitarias del adapter y prueba de integración básica de `POST /extract` con `provider=llm_router` (mock).
+
+Comandos de verificación del avance:
+
+```bash
+ruff check .
+pytest -q
+```
+
 
 ---
 
