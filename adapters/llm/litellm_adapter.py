@@ -2,9 +2,9 @@
 
 from __future__ import annotations
 
+from adapters.base import BaseAdapter
 from api.schemas.request import ExtractionRequest
 from api.schemas.response import StandardizedExtraction
-from adapters.base import BaseAdapter
 
 
 class LiteLLMVisionAdapter(BaseAdapter):

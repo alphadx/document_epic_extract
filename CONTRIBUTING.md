@@ -168,5 +168,6 @@ mypy api/ adapters/
 - Add or update tests for any new behavior.
 - For new adapters, include mock-based integration tests.
 - For registry updates, no tests required — just verify the YAML is valid.
+- **Milestone rule:** if your PR closes or advances a milestone/hito, update `docs/milestone_decisions.md` with the decisions taken and their rationale.
 
 Thank you for making OmniExtract Gateway better! 🚀

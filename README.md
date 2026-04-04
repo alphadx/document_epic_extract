@@ -250,9 +250,10 @@ streamlit run demo/app.py
 ## Roadmap
 
 Ver [plan.md](plan.md) para el plan completo de fases.
+Para trazabilidad de decisiones por hito, ver [docs/milestone_decisions.md](docs/milestone_decisions.md).
 
 - **Fase 0** — Base del repositorio: licencia, convenciones, DoD y análisis inicial de seguridad
-- **Fase 1** — Fundación: FastAPI core + Pydantic schemas *(en progreso)*
+- **Fase 1** — Fundación: FastAPI core + Pydantic schemas *(completada)*
 - **Fase 2** — Adaptadores OCR Cloud (AWS, GCP, Azure)
 - **Fase 3** — Meta-Gateway LLM + LiteLLM + Prebuilt Engine
 - **Fase 4** — Ejecución Local (SmolVLM2)
@@ -265,6 +266,20 @@ Ver [plan.md](plan.md) para el plan completo de fases.
 - Documentación base del proyecto y guía de contribución publicadas.
 - Definition of Done (DoD) de Hito 0 documentada en `plan.md`.
 - Controles mínimos de seguridad iniciales documentados en `plan.md`.
+
+### Cierre de Hito 1 (resumen)
+
+- API Core de FastAPI operativa con endpoint `POST /extract`.
+- Contrato unificado `StandardizedExtraction` implementado en Pydantic.
+- Docker Compose base para API, Demo, Worker (perfil opcional) y Redis.
+- CI básico en GitHub Actions con quality gate de `ruff` + `pytest`.
+
+Comandos de verificación del hito:
+
+```bash
+ruff check .
+pytest -q
+```
 
 ---
 
