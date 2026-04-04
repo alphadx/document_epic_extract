@@ -297,6 +297,24 @@ pytest -q
 
 ---
 
+## Quality Gates (CI)
+
+El pipeline de CI separa dos validaciones:
+
+- **lint-and-test**: ejecuta `ruff check .` + `pytest -q` en Python 3.11 y 3.12.
+- **contract-checks**: valida contrato OpenAPI (tests de contrato + snapshot de firma).
+
+Comandos locales equivalentes:
+
+```bash
+ruff check .
+pytest -q
+pytest -q tests/integration/test_openapi_contract.py tests/integration/test_openapi_signature_snapshot.py
+make openapi-signature
+git diff --exit-code tests/fixtures/openapi_signature.json
+```
+
+
 ## Licencia
 
 Distribuido bajo licencia **MIT**. Ver [LICENSE](LICENSE) para más información.
