@@ -15,7 +15,7 @@ Este documento consolida el estado real de avance por hito con foco en: **logros
 | Hito 4 — Ejecución local | Cerrado (operativo) | 90% | `SmolVLM2Adapter` + contrato worker + e2e local | `FlanT5Adapter` mini/base + hardening de colas |
 | Hito 5 — Demo frontend | Cerrado (operativo) | 100% | Manejo de errores + sesión + pruebas demo | Mejoras UX no bloqueantes |
 | Hito 6 — Docs/OSS | Cerrado (operativo) | 95% | Guías operativas + checklist release + versionado contrato | Publicación PyPI (opcional, dependiente de decisión) |
-| Hito 7 — Post-release | Cierre propuesto | 95% | Riesgos + decisión distribución + validación paquete | Aprobación formal de cierre por owner del roadmap |
+| Hito 7 — Post-release | Cerrado (aprobado) | 100% | Riesgos + decisión distribución + validación paquete + acta aprobada | Ninguno (seguir ciclo de pendientes transversales) |
 
 ---
 
@@ -147,7 +147,7 @@ Este documento consolida el estado real de avance por hito con foco en: **logros
 
 ## Hito 7 — Post-release, distribución y cierre
 
-**Estado:** Cierre propuesto (pendiente aprobación).
+**Estado:** Cerrado (aprobado).
 
 ### Avances confirmados
 - Riesgos post-release registrados y gestionados.
@@ -161,13 +161,13 @@ Este documento consolida el estado real de avance por hito con foco en: **logros
 - `docs/hito7_packaging_validation.md`.
 - `docs/hito7_cierre.md`.
 
-### Pendiente de gobernanza
-- Aprobación explícita del cierre por responsable del roadmap.
+### Cierre de gobernanza
+- Aprobación explícita del cierre confirmada por responsable del roadmap en fecha 2026-04-05.
 
 ---
 
 ## Acciones inmediatas recomendadas (cross-hito)
 
-1. Cerrar aprobación formal de Hito 7 (owner + fecha).
-2. Cerrar brecha técnica de Hito 2 con matriz SDK real certificada.
-3. Planificar evolución local de Hito 4 (`FlanT5Adapter` + colas) como próximo bloque técnico.
+1. Cerrar brecha técnica de Hito 2 con matriz SDK real certificada.
+2. Planificar evolución local de Hito 4 (`FlanT5Adapter` + colas) como próximo bloque técnico.
+3. Definir política operativa de circuit breaker distribuido para despliegues multi-réplica.

@@ -294,8 +294,8 @@ Estado: Cerrado (RC listo)
 ## Hito 7 — Post-release y decisión de distribución
 
 Fecha de inicio: 2026-04-05  
-Fecha de cierre: 2026-04-05 (propuesto)  
-Estado: Cierre propuesto (pendiente de aprobación)
+Fecha de cierre: 2026-04-05  
+Estado: Cerrado (aprobado)
 
 ### Decisiones tomadas (arranque)
 
@@ -315,7 +315,7 @@ Estado: Cierre propuesto (pendiente de aprobación)
 
 - Checklist operativo de Hito 7 publicado: `docs/hito7_checklist.md`.
 - README actualizado para exponer estado explícito de Hito 7 y enlace al checklist.
-- Hito en estado de cierre propuesto: seguimiento post-release y decisión de canal documentados.
+- Hito en estado cerrado: seguimiento post-release y decisión de canal documentados.
 - Estabilización de tests async añadida en `tests/conftest.py` para asegurar ejecución local reproducible de `pytest -q`.
 - Registro de riesgos post-release publicado en `docs/hito7_risk_register.md`.
 - Acta de decisión de distribución cerrada en `docs/hito7_distribution_decision.md` (diferimiento controlado).
@@ -323,5 +323,5 @@ Estado: Cierre propuesto (pendiente de aprobación)
 - Metadata de licencia modernizada en `pyproject.toml` para eliminar warnings de deprecación de `setuptools` durante build.
 - Gate técnico de prepublicación TestPyPI añadido: `scripts/testpypi_publish_gate.sh` + targets `make publish-testpypi-preflight` / `make publish-testpypi`.
 - Decisión de distribución documentada: **diferir publicación** (No publicar aún) con reevaluación en 2026-04-19.
-- Acta de cierre propuesta publicada en `docs/hito7_cierre.md` (Go técnico; pendiente aprobación explícita del roadmap).
-- Siguiente hito habilitado tras aprobación: seguimiento de distribución (credenciales + publicación controlada en TestPyPI/PyPI).
+- Acta de cierre aprobada publicada en `docs/hito7_cierre.md` (Go técnico y aprobación de roadmap registrada en 2026-04-05).
+- Siguiente ciclo habilitado: estabilización de pendientes técnicos transversales (Hito 2 SDK real, Hito 4 FLAN-T5/colas, y política de circuit breaker distribuido).
