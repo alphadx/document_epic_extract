@@ -286,6 +286,7 @@ Para checklist operativo de Fase 3 (LiteLLM + Prebuilt Engine), ver [docs/hito3_
 Para checklist operativo de Fase 4 (Ejecución Local), ver [docs/hito4_checklist.md](docs/hito4_checklist.md).
 Para checklist operativo de Fase 5 (Demo Front-end), ver [docs/hito5_checklist.md](docs/hito5_checklist.md).
 Para checklist operativo de Fase 6 (Documentación & OSS), ver [docs/hito6_checklist.md](docs/hito6_checklist.md).
+Para checklist operativo de Fase 7 (Post-release & Canal PyPI), ver [docs/hito7_checklist.md](docs/hito7_checklist.md).
 Para guía operativa del demo, ver [docs/demo_troubleshooting.md](docs/demo_troubleshooting.md).
 Para guía de Custom Prebuilts, ver [docs/custom_prebuilts.md](docs/custom_prebuilts.md).
 Para checklist de release OSS, ver [docs/release_checklist.md](docs/release_checklist.md).
@@ -293,6 +294,10 @@ Para política de versionado de contrato API, ver [docs/contract_versioning.md](
 Para plan de estabilización y release público, ver [docs/public_release_stabilization.md](docs/public_release_stabilization.md).
 Para evidencia del release candidate actual, ver [docs/release_rc_0.1.1-rc1.md](docs/release_rc_0.1.1-rc1.md).
 Para evidencia del release estable, ver [docs/release_v0.1.1.md](docs/release_v0.1.1.md).
+Para registro de riesgos post-release (Hito 7), ver [docs/hito7_risk_register.md](docs/hito7_risk_register.md).
+Para acta de decisión de distribución (Hito 7), ver [docs/hito7_distribution_decision.md](docs/hito7_distribution_decision.md).
+Para evidencia de validación de empaquetado (Hito 7), ver [docs/hito7_packaging_validation.md](docs/hito7_packaging_validation.md).
+Para acta de cierre propuesta (Hito 7), ver [docs/hito7_cierre.md](docs/hito7_cierre.md).
 Para contrato final API↔Worker local, ver [docs/local_worker_contract.md](docs/local_worker_contract.md).
 
 - **Fase 0** — Base del repositorio: licencia, convenciones, DoD y análisis inicial de seguridad
@@ -302,6 +307,7 @@ Para contrato final API↔Worker local, ver [docs/local_worker_contract.md](docs
 - **Fase 4** — Ejecución Local (SmolVLM2 + FLAN-T5 mini/base en CPU o GPU)
 - **Fase 5** — Demo Front-end (Streamlit)
 - **Fase 6** — Documentación & Open Source Release
+- **Fase 7** — Post-release, distribución y canal PyPI/TestPyPI
 
 
 ### Estado de Hito 5 (cerrado)
@@ -344,7 +350,18 @@ pytest -q
 - RC `v0.1.1-rc1` ejecutado con resultado **GO**.
 - Release estable `v0.1.1` ejecutado con resultado **GO**.
 - Evidencia técnica y riesgos residuales en `docs/release_rc_0.1.1-rc1.md` y `docs/release_v0.1.1.md`.
-- Próximo paso: post-release (seguimiento de riesgos + decisión de canal PyPI/TestPyPI).
+- Próximo paso: aprobación explícita del acta de cierre de Hito 7 (`docs/hito7_cierre.md`).
+
+### Estado de Hito 7 (cierre propuesto)
+
+- Arranque formal del hito documentado en `docs/hito7_checklist.md`.
+- Objetivo de salida: cerrar seguimiento post-release y decisión explícita de distribución (sin publicación / TestPyPI / PyPI).
+- Cierre del hito condicionado a evidencia técnica y actualización documental (`README.md`, `plan.md`, `docs/milestone_decisions.md`).
+- Avance técnico inicial: suite `pytest -q` ejecutable en entorno local con pruebas async en verde.
+- Registro de riesgos post-release publicado y activo en `docs/hito7_risk_register.md`.
+- Validación de empaquetado ejecutada con `python -m build` + `twine check dist/*` (evidencia en `docs/hito7_packaging_validation.md`).
+- Preflight técnico para publicación en TestPyPI disponible vía `make publish-testpypi-preflight` (sin upload).
+- Acta de cierre propuesta publicada en `docs/hito7_cierre.md` para aprobación final.
 
 
 ### Cierre de Hito 0 (resumen)
