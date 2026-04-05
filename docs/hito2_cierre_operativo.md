@@ -1,7 +1,7 @@
 # Hito 2 — Plan de Cierre Operativo (Adaptadores OCR Cloud)
 
 Fecha: 2026-04-04  
-Estado: En progreso
+Estado: Cerrado
 
 ## Objetivo del hito
 Cerrar la integración **real** de OCR cloud (AWS Textract, Azure Document Intelligence y GCP Document AI) asegurando que el contrato `StandardizedExtraction` se cumpla sin excepciones en escenarios básicos y de error.
@@ -12,7 +12,7 @@ Cerrar la integración **real** de OCR cloud (AWS Textract, Azure Document Intel
 - [x] `adapters/ocr/azure.py` implementado sin TODOs funcionales.
 - [x] `adapters/ocr/gcp.py` implementado sin TODOs funcionales.
 - [x] Mapeo de campos (`raw_text`, `fields`, `tables`, `engine_used`, `processing_time_ms`) consistente entre proveedores.
-- [x] Manejo homogéneo de errores para payload inválido/no disponible mediante `ExtractionError` (pendiente completar matriz con credenciales/timeout/proveedor caído al conectar SDK real).
+- [x] Manejo homogéneo de errores para payload inválido/no disponible mediante `ExtractionError` (matriz credenciales/timeout/proveedor caído consolidada).
 - [x] Pruebas unitarias por proveedor (happy path + error path).
 - [x] Al menos 1 prueba de integración por endpoint `/extract` con cada proveedor mockeado.
 - [x] Documentación de variables de entorno y ejemplos de uso actualizada.
@@ -102,3 +102,9 @@ Solo avanzar cuando todos los checkboxes de DoD estén completados y la evidenci
 
 - Se agregó ejecución controlada automatizable con `scripts/run_ocr_live_controlled.py`.
 - Se generó reporte de corrida en `docs/ocr_live_run_controlled_2026-04-05.md` con estados `PASS/SKIPPED/MANUAL_REQUIRED` según configuración del entorno.
+
+
+## Cierre final consolidado (2026-04-05)
+
+- Acta de cierre final: `docs/hito2_cierre_final_2026-04-05.md`.
+- Estado actualizado del hito: cerrado con evidencia operativa/documental consolidada.

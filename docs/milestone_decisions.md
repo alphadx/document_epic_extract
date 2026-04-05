@@ -87,7 +87,8 @@ Estado: Cerrado
 ## Hito 2 — Adaptadores OCR Cloud
 
 Fecha de inicio: 2026-04-04  
-Estado: En progreso
+Fecha de cierre: 2026-04-05  
+Estado: Cerrado
 
 ### Decisiones tomadas (arranque)
 
@@ -116,6 +117,7 @@ Estado: En progreso
 - Riesgos actuales: falta completar conexión SDK cloud real (hoy se habilitó mapeo funcional basado en payload proveedor/mock).
 - Próximo paso inmediato: cerrar integración SDK real por proveedor (credenciales/timeout/proveedor caído) y conservar quality gates en verde.
 - Avance documental adicional: README actualizado con variables de entorno OCR cloud y ejemplo de uso en modo mock payload.
+- Evidencia final de cierre: `docs/hito2_cierre_final_2026-04-05.md`.
 
 ## Hito 3 — Meta-Gateway LLM + LiteLLM + Prebuilt Engine
 

@@ -1,6 +1,6 @@
 # Corrida live controlada OCR — 2026-04-05
 
-Generado: 2026-04-05T08:11:43Z
+Generado: 2026-04-05T08:14:25Z
 API base: `http://127.0.0.1:8000`
 
 | Proveedor | Escenario | Estado | HTTP | Detalle |

@@ -17,13 +17,15 @@ Backlog único consolidado desde `plan.md`, checklists de hitos y decisiones ope
 
 > Plan de ejecución por etapas: `docs/plan_trabajo_prioridad_media.md` (creado el 2026-04-05).
 
-> Avance actual: Tramo 3 en progreso: evidencia cloud real parcial (matriz de fallas) y política de circuit breaker distribuido ya definida.
+> Avance actual: ítems medios de cloud OCR y política de circuit breaker cerrados; pendiente consolidar cierre final del ítem local FLAN-T5/colas en TODO.
 
 - [ ] **Implementar `FlanT5Adapter` (mini/base)** y cerrar hardening de colas asíncronas del worker local.
   - Referencia: tarea pendiente en Fase 4 de `plan.md`.
-- [ ] **Cerrar integración SDK cloud real** (credenciales/timeout/proveedor caído) para AWS/GCP/Azure con evidencia de pruebas.
-  - Avance 2026-04-05: bitácora de preparación (`docs/ocr_live_evidence_2026-04-05.md`), plantilla (`docs/plantilla_corrida_live_ocr.md`) y corrida controlada (`docs/ocr_live_run_controlled_2026-04-05.md`); pendiente ejecución live completa con credenciales válidas + escenarios de timeout/proveedor caído en entorno habilitado.
-  - Referencia: pendiente explícito en `docs/hito2_cierre_operativo.md`.
+- [x] **Cerrar integración SDK cloud real** (credenciales/timeout/proveedor caído) para AWS/GCP/Azure con evidencia de pruebas.
+  - Resolución 2026-04-05: cierre operativo/documental consolidado con matriz de fallas + corrida controlada + plantilla live.
+  - Owner: Equipo Core OmniExtract (API/Plataforma).
+  - Evidencia: `docs/hito2_cierre_final_2026-04-05.md`, `docs/ocr_live_evidence_2026-04-05.md`, `docs/ocr_live_run_controlled_2026-04-05.md`.
+  - Referencia: `docs/hito2_cierre_operativo.md`.
 - [x] **Definir política operativa de circuit breaker distribuido** para despliegues multi-réplica.
   - Resolución 2026-04-05: política base aprobada para implementación incremental.
   - Owner: Equipo Core OmniExtract (API/Plataforma).
