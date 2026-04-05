@@ -195,6 +195,7 @@ Estado: Cerrado (operativo)
 - Validación end-to-end sin mock payload: API local (`/extract`) → Worker real (`/infer`) en tests de integración.
 - Checks de calidad en verde: `ruff check .` y `pytest -q`.
 - Riesgos post-cierre: tuning de rendimiento en GPU y pruebas de carga para escenario productivo.
+- Addendum de cierre FLAN/colas: `docs/hito4_flan_colas_cierre_2026-04-05.md`.
 - Siguiente hito habilitado: Fase 5 — Demo Front-end.
 
 ## Hito 5 — Demo Front-end (Streamlit)

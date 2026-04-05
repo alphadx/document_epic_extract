@@ -17,9 +17,12 @@ Backlog único consolidado desde `plan.md`, checklists de hitos y decisiones ope
 
 > Plan de ejecución por etapas: `docs/plan_trabajo_prioridad_media.md` (creado el 2026-04-05).
 
-> Avance actual: ítems medios de cloud OCR y política de circuit breaker cerrados; pendiente consolidar cierre final del ítem local FLAN-T5/colas en TODO.
+> Avance actual: ítems de prioridad media cerrados con evidencia documental y pruebas asociadas.
 
-- [ ] **Implementar `FlanT5Adapter` (mini/base)** y cerrar hardening de colas asíncronas del worker local.
+- [x] **Implementar `FlanT5Adapter` (mini/base)** y cerrar hardening de colas asíncronas del worker local.
+  - Resolución 2026-04-05: implementado adapter dedicado + worker endurecido (colas/concurrencia/timeout).
+  - Owner: Equipo Core OmniExtract (API/Plataforma).
+  - Evidencia: `docs/hito4_flan_colas_cierre_2026-04-05.md`.
   - Referencia: tarea pendiente en Fase 4 de `plan.md`.
 - [x] **Cerrar integración SDK cloud real** (credenciales/timeout/proveedor caído) para AWS/GCP/Azure con evidencia de pruebas.
   - Resolución 2026-04-05: cierre operativo/documental consolidado con matriz de fallas + corrida controlada + plantilla live.
