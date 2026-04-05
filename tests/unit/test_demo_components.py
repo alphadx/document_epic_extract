@@ -5,10 +5,9 @@ from __future__ import annotations
 from io import BytesIO
 
 import httpx
-from PIL import Image
+import pytest
 
 from demo.components.api_client import build_extract_payload, call_extract
-from demo.components.bbox_renderer import render_bboxes
 from demo.components.comparison_panel import _format_confidence
 
 
@@ -72,6 +71,9 @@ def test_format_confidence_handles_none_and_zero():
 
 
 def test_render_bboxes_handles_non_image_bytes(monkeypatch):
+    pytest.importorskip("PIL")
+    from demo.components.bbox_renderer import render_bboxes
+
     captured: list[str] = []
 
     def fake_info(msg: str):
@@ -85,7 +87,10 @@ def test_render_bboxes_handles_non_image_bytes(monkeypatch):
 
 
 def test_render_bboxes_draws_image(monkeypatch):
-    img = Image.new("RGB", (10, 10), color="white")
+    pil = pytest.importorskip("PIL.Image")
+    from demo.components.bbox_renderer import render_bboxes
+
+    img = pil.new("RGB", (10, 10), color="white")
     buffer = BytesIO()
     img.save(buffer, format="PNG")
 
