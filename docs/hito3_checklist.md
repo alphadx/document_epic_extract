@@ -1,7 +1,7 @@
 # Hito 3 — Checklist de ejecución y cierre
 
-Estado: **Completado técnicamente (pendiente cierre formal)**  
-Última actualización: **2026-04-04**
+Estado: **Cerrado**  
+Última actualización: **2026-04-04 (cierre formal)**
 
 ## Objetivo del hito
 Implementar el meta-gateway LLM con LiteLLM y cerrar el flujo end-to-end de extracción basada en prebuilts.
@@ -36,10 +36,14 @@ Implementar el meta-gateway LLM con LiteLLM y cerrar el flujo end-to-end de extr
 - [x] Registrar decisiones del hito en `docs/milestone_decisions.md`.
 - [x] Añadir ejemplos de request/response LLM en `docs/openapi.md`.
 
-## Riesgos a cerrar antes de declarar “terminado”
-- Ambigüedad de formato de salida en modelos de visión heterogéneos.
-- Diferencias de capacidades multimodales entre proveedores.
-- Costo y latencia por reintentos/fallback de parsing.
+### 6) Gobernanza de contrato API
+- [x] Validaciones de contrato OpenAPI en tests de integración.
+- [x] Snapshot de firma OpenAPI versionado en repositorio.
+- [x] Verificación de snapshot en CI con guía de remediación.
+
+## Riesgos residuales (post-cierre)
+- Variabilidad de salida por proveedor LLM en escenarios reales de producción.
+- Gestión de estado del circuit breaker en despliegues multi-réplica (no distribuido por defecto).
 
 ## Criterio para avanzar al siguiente hito
-Se puede avanzar a Hito 4 sólo cuando **todos** los checks del DoD estén marcados y exista evidencia en tests + documentación.
+Hito 3 cerrado: se habilita formalmente Hito 4.

@@ -85,8 +85,8 @@ Estado: Cerrado
 
 ## Hito 3 — Meta-Gateway LLM + LiteLLM + Prebuilt Engine
 
-Fecha de actualización: 2026-04-04  
-Estado: Cerrado técnicamente
+Fecha de cierre: 2026-04-04  
+Estado: Cerrado
 
 ### Decisiones tomadas
 
@@ -97,14 +97,20 @@ Estado: Cerrado técnicamente
    - **Impacto / trade-offs:** mayor claridad y trazabilidad; requiere mantener checklist actualizado en cada avance.
 
 2. **Mantener el hito en progreso hasta completar hardening e integración endpoint**
-   - **Qué se decidió:** mantener el estado del hito como “En progreso” aunque el `LiteLLMVisionAdapter` ya tenga una implementación funcional inicial.
-   - **Por qué:** aún faltan timeouts/límites e integración del endpoint con `provider=llm_router` para declarar cierre total.
+   - **Qué se decidió:** mantener el estado del hito como “En progreso” hasta cerrar hardening, integración y validaciones de contrato.
+   - **Por qué:** evitar deuda técnica y proteger la API pública de regresiones silenciosas.
    - **Alternativas consideradas:** cerrar el hito al completar solo la implementación base del adapter.
    - **Impacto / trade-offs:** cronograma más estricto, pero mejor calidad de salida y menor retrabajo.
 
-### Evidencia parcial
+3. **Blindar contrato OpenAPI con snapshot + CI dedicado**
+   - **Qué se decidió:** versionar firma OpenAPI, agregar tests de contrato y un job de CI específico para contract-checks.
+   - **Por qué:** detectar regresiones de contrato API antes de mergear PRs.
+   - **Alternativas consideradas:** depender solo de pruebas funcionales sin snapshot de firma.
+   - **Impacto / trade-offs:** mayor disciplina en cambios de API; más claridad para consumidores externos.
 
-- PR(s): actualización documental de ejecución de Hito 3 + implementación funcional inicial del adapter LiteLLM con hardening básico (timeouts/límites) y prueba de integración del endpoint.
-- Checks ejecutados: `ruff check .`, `pytest -q`.
-- Riesgos pendientes: monitoreo en producción de variabilidad por proveedor LLM.
+### Evidencia de cierre
+
+- PR(s): implementación adapter LiteLLM + hardening + contrato OpenAPI (snapshot/tests/CI) + documentación de cierre.
+- Checks ejecutados: `ruff check .`, `pytest -q`, `make openapi-signature`, `git diff --exit-code tests/fixtures/openapi_signature.json`.
+- Riesgos pendientes: monitoreo en producción de variabilidad por proveedor LLM; circuit breaker distribuido en despliegues multi-réplica.
 - Siguiente hito habilitado: Fase 4 — Ejecución Local (SmolVLM2).
