@@ -27,6 +27,7 @@ Este índice organiza toda la documentación por objetivo. El `README.md` princi
 - [Plan de estabilización](public_release_stabilization.md)
 - [Evidencia RC v0.1.1-rc1](release_rc_0.1.1-rc1.md)
 - [Evidencia release estable v0.1.1](release_v0.1.1.md)
+- [Revisión editorial trimestral 2026 Q2](editorial_review_2026q2.md)
 
 ## 5) Historial de hitos
 

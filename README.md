@@ -61,8 +61,8 @@ API Core (FastAPI Meta-Gateway)
 ## Estado del proyecto
 
 - Release estable actual documentado: **v0.1.1**.
-- Hito 7 en estado de **cierre propuesto** (pendiente aprobación explícita).
-- Publicación en PyPI/TestPyPI definida como decisión explícita de roadmap (ver TODO y docs de hito 7).
+- Hito 7 en estado **cerrado (aprobado)** desde **2026-04-05**.
+- Distribución PyPI/TestPyPI en estado **diferida (No publicar aún)** con reevaluación en **2026-04-19** (ver acta de distribución y cierre de hito).
 
 ## Contribuir
 
