@@ -1,11 +1,11 @@
-# Hito 7 — Acta de cierre (propuesta para aprobación)
+# Hito 7 — Acta de cierre (aprobada)
 
-Estado: **Propuesto para aprobación**  
-Fecha de propuesta: **2026-04-05**  
-Responsable propuesto: **Release Manager (Equipo Core OmniExtract)**
+Estado: **Cerrado (aprobado)**  
+Fecha de aprobación: **2026-04-05**  
+Responsable aprobador: **Release Manager (Equipo Core OmniExtract)**
 
-## Decisión propuesta de distribución
-- **Canal elegido (propuesta):** No publicar aún en PyPI/TestPyPI.
+## Decisión final de distribución
+- **Canal elegido:** No publicar aún en PyPI/TestPyPI.
 - **Racional:** aunque el paquete ya pasa `build` y `twine check`, el entorno actual no dispone todavía de credenciales operativas para upload (`TWINE_API_TOKEN` o `TWINE_USERNAME`/`TWINE_PASSWORD`). Se evita una publicación parcial o improvisada y se preserva consistencia operativa.
 - **Reevaluación obligatoria:** 2026-04-19 o antes si se habilitan credenciales + owner + ventana de comunicación.
 
@@ -26,5 +26,5 @@ Resultado consolidado:
 - No se identifican bloqueantes técnicos para operación del repositorio ni para calidad del paquete.
 
 ## Go/No-Go del cierre de hito
-- **Go (propuesto):** cerrar Hito 7 como completado en dimensión técnica/documental.
-- **Pendiente para aprobación final:** confirmación explícita del responsable del roadmap.
+- **Go (aprobado):** Hito 7 queda cerrado como completado en dimensión técnica/documental.
+- **Registro de aprobación:** validación explícita del responsable del roadmap en fecha 2026-04-05.

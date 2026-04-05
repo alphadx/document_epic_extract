@@ -6,12 +6,12 @@ Backlog único consolidado desde `plan.md`, checklists de hitos y decisiones ope
 
 > Ver estado por hito en `docs/hitos_avances.md`.
 
-- [ ] **Aprobación explícita de cierre de Hito 7** en roadmap (pasar de “cierre propuesto” a “cerrado”).
+- [x] **Aprobación explícita de cierre de Hito 7** en roadmap (pasar de “cierre propuesto” a “cerrado”).
   - Referencias: `docs/hito7_cierre.md`, `docs/milestone_decisions.md`.
-- [ ] **Decisión final de distribución** (no publicar / TestPyPI / PyPI) con owner y fecha.
+- [x] **Decisión final de distribución** (no publicar / TestPyPI / PyPI) con owner y fecha.
   - Referencia: `docs/hito7_distribution_decision.md`.
-- [ ] **Abrir siguiente ciclo de estabilización** si permanecen riesgos medios/altos.
-  - Referencias: `docs/release_checklist.md`, `docs/hito7_risk_register.md`.
+- [x] **Abrir siguiente ciclo de estabilización** si permanecen riesgos medios/altos.
+  - Referencias: `docs/release_checklist.md`, `docs/hito7_risk_register.md`, `docs/hitos_avances.md`, `docs/milestone_decisions.md`.
 
 ## Prioridad media
 
