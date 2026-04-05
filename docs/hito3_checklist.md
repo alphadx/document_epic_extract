@@ -47,3 +47,7 @@ Implementar el meta-gateway LLM con LiteLLM y cerrar el flujo end-to-end de extr
 
 ## Criterio para avanzar al siguiente hito
 Hito 3 cerrado: se habilita formalmente Hito 4.
+
+
+## Auditoría final
+Ver detalle en `docs/hito3_final_audit.md`.
