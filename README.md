@@ -1,458 +1,69 @@
 # OmniExtract Gateway
 
-> **Unified document extraction meta-gateway — open source, containerized, and engine-agnostic.**
+> Unified document extraction gateway: OCR cloud + LLMs + local models under a single API contract.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Python 3.11+](https://img.shields.io/badge/python-3.11%2B-blue.svg)](https://www.python.org/downloads/)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.110%2B-009688.svg)](https://fastapi.tiangolo.com)
 [![Docker](https://img.shields.io/badge/Docker-Compose-2496ED.svg)](https://docs.docker.com/compose/)
 
----
+## ¿Qué es?
 
-## ¿Qué es OmniExtract Gateway?
+**OmniExtract Gateway** unifica la extracción de datos estructurados desde imágenes/PDFs en una sola API (`POST /extract`).
 
-**OmniExtract Gateway** es un meta-gateway que unifica la extracción de datos estructurados (texto, pares clave-valor, tablas y coordenadas) desde imágenes y documentos en un único punto de entrada (API). Abstrae completamente la diferencia entre:
+- Soporta OCR cloud (AWS/Azure/GCP), LLMs vía LiteLLM y modelos locales.
+- Estandariza la salida en `StandardizedExtraction`.
+- Permite usar prebuilts (invoice, receipt, id_card, etc.) o plantillas personalizadas.
 
-| Tipo de Motor | Ejemplos |
-| :--- | :--- |
-| **OCR Cloud (determinista)** | AWS Textract, Azure Document Intelligence, GCP Document AI |
-| **LLMs Comerciales** | Claude 4, GPT-4.1, Gemini 2.0, DeepSeek V3, Mistral |
-| **LLMs Open Source** | Qwen2.5-VL, Llama-3.2-Vision, Phi-4 |
-| **Modelos Locales** | SmolVLM2, flan-t5 |
+## Propuesta de valor
 
-Todos los motores devuelven el **mismo esquema JSON estandarizado** (`StandardizedExtraction`). Tu aplicación no necesita saber si está hablando con un OCR clásico o con un LLM de última generación.
+- **Sin lock-in de proveedor**: cambia de motor sin romper integraciones.
+- **Contrato de salida único**: mismo JSON para motores deterministas o probabilísticos.
+- **Extensible por configuración**: registry dinámico de modelos y plantillas YAML.
+- **Listo para demo y operación local**: API FastAPI + demo Streamlit + docker compose.
 
----
-
-## Características Principales
-
-- 🔌 **Agnóstico al Motor** — Cambia entre AWS Textract y Claude 3.5 Sonnet modificando un parámetro.
-- 📄 **Prebuilt Templates** — Plantillas listas para facturas, recibos, DNIs, estados de cuenta, y más.
-- 🧩 **Custom Prebuilts** — Define tus propios campos y el gateway genera el prompt óptimo automáticamente.
-- 📦 **100% Contenerizado** — Docker Compose listo para usar en local o en producción.
-- 🗂️ **Registro Dinámico de Modelos** — Añade nuevos modelos vía PR sin tocar código.
-- 🖼️ **Demo Interactivo** — Interfaz Streamlit con comparación side-by-side y visualización de bounding boxes.
-- 🔒 **Sin Lock-in** — BYOE (Bring Your Own Endpoint) para modelos y endpoints personalizados.
-
----
-
-## Inicio Rápido
-
-### Prerrequisitos
-
-- [Docker](https://docs.docker.com/get-docker/) + [Docker Compose](https://docs.docker.com/compose/install/) v2+
-- Python 3.11+ (para desarrollo local)
-
-### Levantar el Stack Completo
+## Demo rápida
 
 ```bash
-# 1. Clonar el repositorio
 git clone https://github.com/alphadx/document_epic_extract.git
 cd document_epic_extract
-
-# 2. Copiar variables de entorno y configurar tus API keys
 cp .env.example .env
-# Editar .env con tus credenciales (AWS, OpenAI, Anthropic, etc.)
-
-# 3. Levantar todos los servicios
+# editar .env con credenciales
 docker compose up -d
-
-# API Core disponible en:  http://localhost:8000
-# Demo UI disponible en:   http://localhost:8501
-# Docs (Swagger) en:       http://localhost:8000/docs
 ```
 
-### Ejemplo de Uso (cURL)
+- API: http://localhost:8000
+- Swagger: http://localhost:8000/docs
+- Demo: http://localhost:8501
 
-```bash
-curl -X POST http://localhost:8000/extract \
-  -H "Content-Type: application/json" \
-  -d '{
-    "document": "<base64_encoded_image_or_url>",
-    "engine_config": {
-      "provider": "llm_router",
-      "model": "claude-3-5-sonnet-20241022",
-      "api_keys": { "anthropic": "sk-ant-..." }
-    },
-    "extraction_target": {
-      "document_type": "invoice"
-    }
-  }'
+## Arquitectura (alto nivel)
+
+```text
+Demo UI (Streamlit)
+        │
+        ▼
+API Core (FastAPI Meta-Gateway)
+   ├── OCR adapters (AWS/Azure/GCP)
+   ├── LLM router adapter (LiteLLM)
+   └── Local adapter (Worker)
 ```
 
+## Documentación
 
-### Variables de Entorno OCR Cloud (referencia rápida)
+> El README queda orientado a producto. La documentación operativa/técnica vive en `docs/`.
 
-Estas variables existen en `.env.example` para la parte OCR cloud:
+- **Portal de documentación**: [`docs/README.md`](docs/README.md)
+- **Getting Started**: [`docs/getting_started.md`](docs/getting_started.md)
+- **Roadmap y arquitectura**: [`plan.md`](plan.md)
+- **Avances de hitos**: [`docs/hitos_avances.md`](docs/hitos_avances.md)
+- **Backlog/TODO consolidado**: [`TODO.md`](TODO.md)
 
-- AWS Textract: `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, `AWS_DEFAULT_REGION`
-- GCP Document AI: `GCP_PROJECT_ID`, `GCP_LOCATION`, `GCP_PROCESSOR_ID`, `GOOGLE_APPLICATION_CREDENTIALS`
-- Azure Document Intelligence: `AZURE_DOCUMENT_INTELLIGENCE_ENDPOINT`, `AZURE_DOCUMENT_INTELLIGENCE_KEY`
+## Estado del proyecto
 
-### Ejemplo de prueba local con payload mock (OCR Cloud)
-
-> Útil para desarrollo y tests sin llamar al SDK cloud real.
-
-```bash
-curl -X POST http://localhost:8000/extract \
-  -H "Content-Type: application/json" \
-  -d '{
-    "document": "ignored",
-    "engine_config": {
-      "provider": "aws",
-      "model": "textract",
-      "api_keys": {
-        "mock_response_json": "{\"Blocks\":[{\"Id\":\"l1\",\"BlockType\":\"LINE\",\"Text\":\"Factura 100\"}]}"
-      }
-    },
-    "extraction_target": { "document_type": "invoice" }
-  }'
-```
-
-### Respuesta Estandarizada
-
-```json
-{
-  "raw_text": "FACTURA N° 0001-00045678\nFecha: 2026-01-15\n...",
-  "fields": [
-    {
-      "key": "invoice_number",
-      "value": "0001-00045678",
-      "confidence": 0.98,
-      "bounding_box": { "x0": 0.6, "y0": 0.05, "x1": 0.95, "y1": 0.10 }
-    },
-    {
-      "key": "total_amount",
-      "value": "1250.00",
-      "confidence": 0.97,
-      "bounding_box": { "x0": 0.7, "y0": 0.85, "x1": 0.95, "y1": 0.90 }
-    }
-  ],
-  "tables": [],
-  "engine_used": "claude-3-5-sonnet-20241022",
-  "processing_time_ms": 1840.5
-}
-```
-
----
-
-## Arquitectura
-
-```
-┌─────────────────────────────────────────────────────────┐
-│                     Docker Network                      │
-│                                                         │
-│  ┌──────────────┐     ┌──────────────────────────────┐  │
-│  │  Demo Client │────▶│      API Core (Meta-GW)      │  │
-│  │  (Streamlit) │     │  FastAPI + Pydantic + LiteLLM│  │
-│  └──────────────┘     └──────────┬───────────────────┘  │
-│                                  │                      │
-│          ┌───────────────────────┼──────────────────┐   │
-│          ▼                       ▼                  ▼   │
-│  ┌──────────────┐  ┌─────────────────────┐  ┌──────────┐│
-│  │  OCR Cloud   │  │  LLM Router (LiteLLM│  │  Worker  ││
-│  │ AWS/GCP/Azure│  │  OpenAI/Anthropic/  │  │ SmolVLM2 ││
-│  └──────────────┘  │  DeepSeek/Qwen/etc.)│  │  (local) ││
-│                    └─────────────────────┘  └──────────┘│
-│                                                         │
-│  ┌──────────────────────────────────────────────────┐   │
-│  │              DB / Cache (Redis / SQLite)          │   │
-│  └──────────────────────────────────────────────────┘   │
-└─────────────────────────────────────────────────────────┘
-```
-
-Para más detalles, ver [plan.md](plan.md).
-
----
-
-## Estructura del Proyecto
-
-```
-document_epic_extract/
-├── api/                   ← FastAPI Core (Meta-Gateway)
-│   ├── main.py
-│   ├── routers/           ← /extract, /prebuilts, /registry
-│   ├── schemas/           ← Pydantic models
-│   ├── services/          ← Routing & template logic
-│   └── core/              ← Config & exceptions
-├── adapters/              ← Engine Adapters (OCR / LLM / Local)
-├── prebuilts/             ← YAML templates (invoice, receipt, etc.)
-├── registry/              ← models.yaml — dynamic model registry
-├── demo/                  ← Streamlit Demo Client
-├── docker/                ← Dockerfiles per service
-├── docs/                  ← OpenAPI spec & guides
-├── tests/                 ← Unit & integration tests
-├── docker-compose.yml
-├── pyproject.toml
-├── CONTRIBUTING.md
-├── plan.md                ← Full architecture & roadmap
-└── README.md
-```
-
----
-
-## Motores Soportados
-
-### OCR Cloud (Determinista)
-| Proveedor | Adapter |
-| :--- | :--- |
-| AWS Textract | `adapters/ocr/aws.py` |
-| Azure Document Intelligence | `adapters/ocr/azure.py` |
-| GCP Document AI | `adapters/ocr/gcp.py` |
-
-### LLMs (vía LiteLLM)
-| Familia | Modelos Destacados |
-| :--- | :--- |
-| Anthropic | claude-3-5-sonnet, claude-3-7-sonnet, claude-opus-4 |
-| OpenAI | gpt-4o, gpt-4.1, o3 |
-| Google | gemini-2.0-flash, gemini-2.5-pro |
-| DeepSeek | deepseek-v3, deepseek-r1 |
-| Qwen | qwen2.5-vl-72b-instruct |
-| Mistral | mistral-large, pixtral |
-| + 90 modelos más via `registry/models.yaml` | |
-
-### Modelos Locales
-| Modelo | Adapter |
-| :--- | :--- |
-| SmolVLM2-2.2B-Instruct | `adapters/local/smolvlm2.py` |
-| FLAN-T5 Mini | `adapters/local/flan_t5.py` *(planificado)* |
-| FLAN-T5 Base | `adapters/local/flan_t5.py` *(planificado, CPU/GPU)* |
-
----
-
-## Prebuilts Disponibles
-
-| ID | Descripción |
-| :--- | :--- |
-| `invoice` | Factura / Invoice |
-| `receipt` | Boleta / Recibo |
-| `id_card` | Documento de Identidad |
-| `bank_statement` | Estado de Cuenta Bancario |
-| `customs_declaration` | Declaración Aduanera |
-| `custom` | Define tus propios campos vía API |
-
----
-
-## Endpoints Principales
-
-| Método | Ruta | Descripción |
-| :--- | :--- | :--- |
-| `POST` | `/extract` | Extracción principal (enruta al motor elegido) |
-| `GET` | `/prebuilts` | Lista de prebuilts disponibles |
-| `POST` | `/prebuilts/custom` | Registrar un Custom Prebuilt |
-| `GET` | `/registry/models` | Lista de modelos del registro dinámico |
-| `GET` | `/health` | Health check |
-
-Documentación interactiva disponible en `/docs` (Swagger UI) y `/redoc`.
-
----
-
-## Desarrollo Local (sin Docker)
-
-```bash
-# Crear entorno virtual
-python -m venv .venv
-source .venv/bin/activate  # Linux/Mac
-# .venv\Scripts\activate  # Windows
-
-# Instalar dependencias
-pip install -e ".[dev]"
-
-# Ejecutar la API
-uvicorn api.main:app --reload --port 8000
-
-# Ejecutar el Demo
-streamlit run demo/app.py
-```
-
----
+- Release estable actual documentado: **v0.1.1**.
+- Hito 7 en estado de **cierre propuesto** (pendiente aprobación explícita).
+- Publicación en PyPI/TestPyPI definida como decisión explícita de roadmap (ver TODO y docs de hito 7).
 
 ## Contribuir
 
-¡Las contribuciones son bienvenidas! Lee [CONTRIBUTING.md](CONTRIBUTING.md) para saber cómo:
-
-- Añadir un nuevo modelo al registro (`registry/models.yaml`).
-- Crear un nuevo Engine Adapter.
-- Proponer o mejorar un Prebuilt Template.
-- Reportar bugs o solicitar features.
-
----
-
-## Roadmap
-
-Ver [plan.md](plan.md) para el plan completo de fases.
-Para trazabilidad de decisiones por hito, ver [docs/milestone_decisions.md](docs/milestone_decisions.md).
-Para checklist operativo de Fase 3 (LiteLLM + Prebuilt Engine), ver [docs/hito3_checklist.md](docs/hito3_checklist.md).
-Para checklist operativo de Fase 4 (Ejecución Local), ver [docs/hito4_checklist.md](docs/hito4_checklist.md).
-Para checklist operativo de Fase 5 (Demo Front-end), ver [docs/hito5_checklist.md](docs/hito5_checklist.md).
-Para checklist operativo de Fase 6 (Documentación & OSS), ver [docs/hito6_checklist.md](docs/hito6_checklist.md).
-Para checklist operativo de Fase 7 (Post-release & Canal PyPI), ver [docs/hito7_checklist.md](docs/hito7_checklist.md).
-Para guía operativa del demo, ver [docs/demo_troubleshooting.md](docs/demo_troubleshooting.md).
-Para guía de Custom Prebuilts, ver [docs/custom_prebuilts.md](docs/custom_prebuilts.md).
-Para checklist de release OSS, ver [docs/release_checklist.md](docs/release_checklist.md).
-Para política de versionado de contrato API, ver [docs/contract_versioning.md](docs/contract_versioning.md).
-Para plan de estabilización y release público, ver [docs/public_release_stabilization.md](docs/public_release_stabilization.md).
-Para evidencia del release candidate actual, ver [docs/release_rc_0.1.1-rc1.md](docs/release_rc_0.1.1-rc1.md).
-Para evidencia del release estable, ver [docs/release_v0.1.1.md](docs/release_v0.1.1.md).
-Para registro de riesgos post-release (Hito 7), ver [docs/hito7_risk_register.md](docs/hito7_risk_register.md).
-Para acta de decisión de distribución (Hito 7), ver [docs/hito7_distribution_decision.md](docs/hito7_distribution_decision.md).
-Para evidencia de validación de empaquetado (Hito 7), ver [docs/hito7_packaging_validation.md](docs/hito7_packaging_validation.md).
-Para acta de cierre propuesta (Hito 7), ver [docs/hito7_cierre.md](docs/hito7_cierre.md).
-Para contrato final API↔Worker local, ver [docs/local_worker_contract.md](docs/local_worker_contract.md).
-
-- **Fase 0** — Base del repositorio: licencia, convenciones, DoD y análisis inicial de seguridad
-- **Fase 1** — Fundación: FastAPI core + Pydantic schemas *(completada)*
-- **Fase 2** — Adaptadores OCR Cloud (AWS, GCP, Azure)
-- **Fase 3** — Meta-Gateway LLM + LiteLLM + Prebuilt Engine
-- **Fase 4** — Ejecución Local (SmolVLM2 + FLAN-T5 mini/base en CPU o GPU)
-- **Fase 5** — Demo Front-end (Streamlit)
-- **Fase 6** — Documentación & Open Source Release
-- **Fase 7** — Post-release, distribución y canal PyPI/TestPyPI
-
-
-### Estado de Hito 5 (cerrado)
-
-- Checklist operativo de cierre publicado en `docs/hito5_checklist.md`.
-- Demo Streamlit endurecido con errores HTTP accionables, persistencia en sesión y fallback de preview para archivos no imagen.
-- Pruebas unitarias añadidas para helpers críticos del demo.
-- Quality gates del repositorio validados en verde (`ruff check .`, `pytest -q`).
-
-Comandos de verificación actuales:
-
-```bash
-ruff check .
-pytest -q
-```
-
-#### Matriz de compatibilidad del Demo (referencial)
-
-| Provider | Modelo (ejemplo) | Estado en demo | Requiere API key |
-| --- | --- | --- | --- |
-| `aws` | `textract-analyze-document` | Soportado (vía adapter OCR) | Sí |
-| `gcp` | `documentai-form-parser` | Soportado (vía adapter OCR) | Sí |
-| `azure` | `prebuilt-document` | Soportado (vía adapter OCR) | Sí |
-| `llm_router` | `gpt-4o` / `claude-3-5-sonnet-20241022` | Soportado (vía LiteLLM) | Sí |
-| `local` | `smolvlm2-2.2b-instruct` | Soportado (requiere worker local) | No |
-
-### Estado de Hito 6 (cerrado)
-
-- Checklist operativo cerrado en `docs/hito6_checklist.md`.
-- Guías publicadas: Custom Prebuilts, troubleshooting demo, release checklist y versionado de contrato.
-- Hito preparado para transición al siguiente tramo de producto.
-
-### Siguiente tramo: estabilización/release público
-
-- Ejecutar proceso de estabilización con criterio Go/No-Go en `docs/public_release_stabilization.md`.
-- RC `v0.1.1-rc1` y release estable `v0.1.1` ejecutados en estado GO.
-
-### Estado actual de estabilización
-
-- RC `v0.1.1-rc1` ejecutado con resultado **GO**.
-- Release estable `v0.1.1` ejecutado con resultado **GO**.
-- Evidencia técnica y riesgos residuales en `docs/release_rc_0.1.1-rc1.md` y `docs/release_v0.1.1.md`.
-- Próximo paso: aprobación explícita del acta de cierre de Hito 7 (`docs/hito7_cierre.md`).
-
-### Estado de Hito 7 (cierre propuesto)
-
-- Arranque formal del hito documentado en `docs/hito7_checklist.md`.
-- Objetivo de salida: cerrar seguimiento post-release y decisión explícita de distribución (sin publicación / TestPyPI / PyPI).
-- Cierre del hito condicionado a evidencia técnica y actualización documental (`README.md`, `plan.md`, `docs/milestone_decisions.md`).
-- Avance técnico inicial: suite `pytest -q` ejecutable en entorno local con pruebas async en verde.
-- Registro de riesgos post-release publicado y activo en `docs/hito7_risk_register.md`.
-- Validación de empaquetado ejecutada con `python -m build` + `twine check dist/*` (evidencia en `docs/hito7_packaging_validation.md`).
-- Preflight técnico para publicación en TestPyPI disponible vía `make publish-testpypi-preflight` (sin upload).
-- Acta de cierre propuesta publicada en `docs/hito7_cierre.md` para aprobación final.
-
-
-### Cierre de Hito 0 (resumen)
-
-- Licencia OSS explícita y visible.
-- Documentación base del proyecto y guía de contribución publicadas.
-- Definition of Done (DoD) de Hito 0 documentada en `plan.md`.
-- Controles mínimos de seguridad iniciales documentados en `plan.md`.
-
-### Cierre de Hito 1 (resumen)
-
-- API Core de FastAPI operativa con endpoint `POST /extract`.
-- Contrato unificado `StandardizedExtraction` implementado en Pydantic.
-- Docker Compose base para API, Demo, Worker (perfil opcional) y Redis.
-- CI básico en GitHub Actions con quality gate de `ruff` + `pytest`.
-
-Comandos de verificación del hito:
-
-```bash
-ruff check .
-pytest -q
-```
-
-### Cierre de Hito 3 (resumen)
-
-- `LiteLLMVisionAdapter` implementado con parseo robusto, resiliencia (retry/backoff/circuit breaker) e integración de `POST /extract`.
-- Gobernanza de contrato OpenAPI cerrada con tests de contrato + snapshot versionado + job de CI dedicado.
-- Auditoría final de hito documentada en `docs/hito3_final_audit.md`.
-
-Comandos de verificación del cierre:
-
-```bash
-ruff check .
-pytest -q
-```
-
-### Cierre de Hito 4 (resumen)
-
-- Hito 4 cerrado en estado operativo y documentado en `docs/hito4_checklist.md`.
-- `SmolVLM2Adapter` implementado con integración HTTP al Worker (`/infer`) y validación de contrato.
-- Contrato final del Worker documentado en `docs/local_worker_contract.md`.
-- Integración end-to-end sin mock payload validada en tests (`/extract` → `/infer`).
-
-Comandos de verificación del cierre:
-
-```bash
-ruff check .
-pytest -q
-```
-
-### Operación local CPU/GPU (Worker)
-
-```bash
-# CPU (smoke y desarrollo)
-LOCAL_WORKER_BACKEND=heuristic LOCAL_WORKER_DEVICE=cpu docker compose --profile local-models up worker -d
-
-# GPU (SmolVLM2 real, requiere runtime NVIDIA)
-LOCAL_WORKER_BACKEND=smolvlm2 LOCAL_WORKER_DEVICE=cuda docker compose --profile local-models up worker -d
-```
-
-
----
-
-## Quality Gates (CI)
-
-El pipeline de CI separa dos validaciones:
-
-- **lint-and-test**: ejecuta `ruff check .` + `pytest -q` en Python 3.11 y 3.12.
-- **contract-checks**: valida contrato OpenAPI (tests de contrato + snapshot de firma).
-- **release-readiness**: gate manual/tag para validar pre-release con `make release-readiness`.
-
-Comandos locales equivalentes:
-
-```bash
-make release-readiness
-ruff check .
-pytest -q
-pytest -q tests/integration/test_openapi_contract.py tests/integration/test_openapi_signature_snapshot.py
-make openapi-signature
-git diff --exit-code tests/fixtures/openapi_signature.json
-```
-
-
-## Licencia
-
-Distribuido bajo licencia **MIT**. Ver [LICENSE](LICENSE) para más información.
-
-## Changelog
-
-Ver historial de cambios en [CHANGELOG.md](CHANGELOG.md).
-
----
-
-*Construido con ❤️ por la comunidad — contributions welcome!*
+Consulta [`CONTRIBUTING.md`](CONTRIBUTING.md) para guías de contribución.

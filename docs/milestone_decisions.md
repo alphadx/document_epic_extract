@@ -4,6 +4,8 @@ Este documento deja constancia de **qué decisiones se tomaron en cada hito, por
 
 > Norma del proyecto (obligatoria): **cada hito nuevo debe actualizar este archivo** antes de darse por cerrado.
 
+> Vista ejecutiva de avance por hito: `docs/hitos_avances.md`.
+
 ---
 
 ## Propósito
