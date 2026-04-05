@@ -2,6 +2,8 @@
 
 Backlog único consolidado desde `plan.md`, checklists de hitos y decisiones operativas.
 
+> Última actualización: 2026-04-05.
+
 ## Prioridad alta
 
 > Ver estado por hito en `docs/hitos_avances.md`.
@@ -45,13 +47,35 @@ Backlog único consolidado desde `plan.md`, checklists de hitos y decisiones ope
   - Owner: Equipo Core OmniExtract (mantención documental). Fecha de ejecución: 2026-04-05.
   - Evidencia: `docs/editorial_review_2026q2.md`.
 
+## Deuda técnica abierta (pendiente real)
+
+> Esta sección debe mantenerse con ítems **abiertos** y evidencia de cierre; evita “falsos verdes”.
+
+- [ ] **Implementar circuit breaker distribuido en producción multi-réplica (Redis + atomicidad + métricas).**
+  - Estado: política aprobada, implementación pendiente por fases A/B/C.
+  - Owner: Equipo Core OmniExtract (API/Plataforma).
+  - Fecha objetivo: 2026-04-19.
+  - Evidencia esperada: pruebas de transición CLOSED→OPEN→HALF_OPEN→CLOSED y tablero operativo.
+  - Referencia: `docs/circuit_breaker_distribuido.md`.
+- [ ] **Cerrar riesgo R7-01 de no-regresión contractual en consumo real.**
+  - Estado: `Abierto` en registro de riesgos post-release.
+  - Owner: Equipo Core OmniExtract (API/Plataforma).
+  - Fecha objetivo: 2026-04-12 (cierre de ventana de observación).
+  - Evidencia esperada: corrida release-readiness periódica + reporte de consumo real sin drift.
+  - Referencia: `docs/hito7_risk_register.md`.
+- [ ] **Reevaluar decisión de publicación (No publicar aún) y ejecutar resolución documentada.**
+  - Estado: diferimiento vigente; requiere nueva decisión explícita.
+  - Owner: Release Manager (Equipo Core OmniExtract).
+  - Fecha objetivo: 2026-04-19.
+  - Evidencia esperada: acta actualizada + ejecución `make publish-testpypi-preflight` (y publish solo si aplica).
+  - Referencia: `docs/hito7_distribution_decision.md`.
+
 ## Tareas de documentación (este cambio)
 
 - [x] Reorientar `README.md` a presentación de producto y enlaces.
-- [x] Mover guía de inicio y operación a `docs/getting_started.md`.
-- [x] Crear índice documental en `docs/README.md`.
-- [x] Crear skill de documentación para estandarizar mantenimiento documental.
+- [x] Incorporar TL;DR y modos “comenzar rápido” / “comenzar lento (controlado)”.
+- [x] Declarar de forma explícita la deuda técnica abierta en README y TODO.
 
 ## Criterio de “Done” para este TODO
 
-Se considera al día cuando no existan ítems abiertos de prioridad alta y cada ítem tenga owner, fecha objetivo y evidencia enlazada en PR/documento.
+Se considera al día cuando no existan ítems abiertos de prioridad alta, cada ítem tenga owner/fecha/evidencia, y la sección **Deuda técnica abierta** tenga sólo trabajo pendiente real o quede vacía con evidencia de cierre.
