@@ -1,4 +1,4 @@
-.PHONY: test lint openapi-signature release-readiness package-check publish-testpypi-preflight publish-testpypi
+.PHONY: test lint openapi-signature cb-consistency release-readiness package-check publish-testpypi-preflight publish-testpypi
 
 lint:
 	ruff check .
@@ -9,9 +9,13 @@ test:
 openapi-signature:
 	python scripts/generate_openapi_signature.py
 
+cb-consistency:
+	python scripts/check_circuit_breaker_consistency.py
+
 release-readiness:
 	ruff check .
 	pytest -q
+	python scripts/check_circuit_breaker_consistency.py
 	python scripts/generate_openapi_signature.py
 	git diff --exit-code tests/fixtures/openapi_signature.json
 

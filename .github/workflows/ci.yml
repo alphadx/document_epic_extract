@@ -39,6 +39,9 @@ jobs:
       - name: Run tests
         run: pytest -q
 
+      - name: Circuit breaker consistency
+        run: make cb-consistency
+
   contract-checks:
     # Dedicated contract job: OpenAPI schema/signature checks for public API stability.
     runs-on: ubuntu-latest

@@ -2,7 +2,7 @@
 
 from fastapi import FastAPI
 
-from api.routers import extract, prebuilts, registry
+from api.routers import extract, ops, prebuilts, registry
 
 app = FastAPI(
     title="OmniExtract Gateway",
@@ -19,6 +19,7 @@ app = FastAPI(
 app.include_router(extract.router, prefix="/extract", tags=["Extraction"])
 app.include_router(prebuilts.router, prefix="/prebuilts", tags=["Prebuilts"])
 app.include_router(registry.router, prefix="/registry", tags=["Registry"])
+app.include_router(ops.router, prefix="/ops", tags=["Operations"])
 
 
 @app.get("/health", tags=["Health"])

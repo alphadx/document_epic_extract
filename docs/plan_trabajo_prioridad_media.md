@@ -1,6 +1,7 @@
 # Plan de trabajo por tramos — TODO de prioridad media
 
 Fecha base: 2026-04-05.
+Estado de ejecución: **cerrado** (tramos completados el 2026-04-05; mantener como referencia histórica).
 
 Este plan descompone los 3 ítems abiertos de prioridad media en tramos amplios y secuenciales.
 Cada tramo termina con un punto de control para validar avance antes de pasar al siguiente.

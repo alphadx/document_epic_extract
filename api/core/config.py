@@ -33,6 +33,10 @@ class Settings(BaseSettings):
     llm_retry_backoff_ms: int = 150
     llm_circuit_breaker_threshold: int = 5
     llm_circuit_breaker_cooldown_ms: int = 10000
+    llm_circuit_breaker_half_open_max_calls: int = 1
+    llm_circuit_breaker_backend: str = "memory"
+    llm_circuit_breaker_redis_url: str = "redis://redis:6379/0"
+    llm_circuit_breaker_redis_prefix: str = "cb:llm_router:"
 
 
 settings = Settings()

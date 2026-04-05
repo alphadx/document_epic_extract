@@ -6,7 +6,7 @@ import pytest
 
 from adapters.llm import litellm_adapter
 from adapters.llm.litellm_adapter import LiteLLMVisionAdapter
-from adapters.llm.resilience import circuit_breaker_store
+from adapters.llm.resilience import circuit_breaker_store, circuit_breaker_telemetry
 from api.core.config import settings
 from api.core.exceptions import ExtractionError
 from api.schemas.request import EngineConfig, ExtractionRequest, ExtractionTarget
@@ -180,6 +180,10 @@ class TestLiteLLMVisionAdapter:
             raise RuntimeError("down")
 
         circuit_breaker_store.clear()
+        circuit_breaker_telemetry.state.clear()
+        circuit_breaker_telemetry.open_total.clear()
+        circuit_breaker_telemetry.reject_total.clear()
+        circuit_breaker_telemetry.half_open_probe_total.clear()
         monkeypatch.setattr(litellm_adapter, "load_prebuilt", fake_load_prebuilt)
         monkeypatch.setattr(litellm_adapter, "_litellm_acompletion", lambda: always_fails)
         monkeypatch.setattr(settings, "llm_max_retries", 1)
@@ -201,6 +205,9 @@ class TestLiteLLMVisionAdapter:
             await adapter.extract(req)
 
         assert attempts["n"] == 1
+        snapshot = circuit_breaker_telemetry.snapshot()
+        assert snapshot["cb_open_total"]["llm_router|llm_router:gpt-4o"] == 1
+        assert snapshot["cb_reject_total"]["llm_router|llm_router:gpt-4o"] == 1
 
     @pytest.mark.asyncio
     async def test_extract_wraps_prebuilt_load_errors(self, monkeypatch: pytest.MonkeyPatch):
@@ -218,3 +225,57 @@ class TestLiteLLMVisionAdapter:
 
         with pytest.raises(ExtractionError, match="Failed to load prebuilt template"):
             await adapter.extract(req)
+
+    @pytest.mark.asyncio
+    async def test_extract_half_open_probe_success_updates_metrics(self, monkeypatch: pytest.MonkeyPatch):
+        if not hasattr(circuit_breaker_store, "state"):
+            pytest.skip("Test applies to in-memory store implementation.")
+
+        async def fake_load_prebuilt(document_type: str):
+            return {
+                "id": document_type,
+                "system_prompt": "Extract fields",
+                "required_fields": [],
+            }
+
+        async def success_acompletion(**kwargs):
+            return {
+                "choices": [
+                    {
+                        "message": {
+                            "content": (
+                                '{"raw_text":"ok","fields":[],"tables":[],'
+                                '"engine_used":"llm_router:gpt-4o"}'
+                            )
+                        }
+                    }
+                ]
+            }
+
+        model = "gpt-4o"
+        model_key = f"llm_router:{model}"
+        circuit_breaker_store.state[model_key] = {
+            "state": "open",
+            "failures": 1,
+            "opened_until": 0.0,
+            "half_open_tokens": 0,
+        }
+        circuit_breaker_telemetry.state.clear()
+        circuit_breaker_telemetry.open_total.clear()
+        circuit_breaker_telemetry.reject_total.clear()
+        circuit_breaker_telemetry.half_open_probe_total.clear()
+
+        monkeypatch.setattr(litellm_adapter, "load_prebuilt", fake_load_prebuilt)
+        monkeypatch.setattr(litellm_adapter, "_litellm_acompletion", lambda: success_acompletion)
+
+        adapter = LiteLLMVisionAdapter()
+        req = ExtractionRequest(
+            document="https://example.com/invoice.png",
+            engine_config=EngineConfig(provider="llm_router", model=model),
+            extraction_target=ExtractionTarget(document_type="invoice"),
+        )
+
+        result = await adapter.extract(req)
+        assert result.raw_text == "ok"
+        snapshot = circuit_breaker_telemetry.snapshot()
+        assert snapshot["cb_half_open_probe_total"]["llm_router|llm_router:gpt-4o|success"] == 1

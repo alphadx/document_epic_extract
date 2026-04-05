@@ -148,7 +148,7 @@ Estado: Cerrado
 
 - PR(s): implementación adapter LiteLLM + hardening + contrato OpenAPI (snapshot/tests/CI) + documentación de cierre.
 - Checks ejecutados: `ruff check .`, `pytest -q`, `make openapi-signature`, `git diff --exit-code tests/fixtures/openapi_signature.json`.
-- Riesgos pendientes: monitoreo en producción de variabilidad por proveedor LLM; circuit breaker distribuido en despliegues multi-réplica.
+- Riesgos pendientes: monitoreo en producción de variabilidad por proveedor LLM.
 - Siguiente hito habilitado: Fase 4 — Ejecución Local (SmolVLM2).
 
 ### Addendum operativo (2026-04-05)
@@ -156,7 +156,7 @@ Estado: Cerrado
 - **Qué se decidió:** establecer política operativa de circuit breaker distribuido con estado compartido (Redis), transición `closed/open/half_open`, runbook y métricas mínimas.
 - **Por qué:** eliminar divergencia de estado entre réplicas y reducir cascadas de fallo en proveedores externos.
 - **Evidencia:** `docs/circuit_breaker_distribuido.md`.
-- **Estado del riesgo:** mitigación definida a nivel operativo; pendiente implementación completa del store distribuido en runtime.
+- **Estado del riesgo:** **cerrado** en 2026-04-05 tras implementación de store distribuido + fallback + observabilidad + pruebas de transición.
 
 
 ## Hito 4 — Ejecución Local (SmolVLM2)
@@ -334,4 +334,4 @@ Estado: Cerrado (aprobado)
 - Gate técnico de prepublicación TestPyPI añadido: `scripts/testpypi_publish_gate.sh` + targets `make publish-testpypi-preflight` / `make publish-testpypi`.
 - Decisión de distribución documentada: **diferir publicación** (No publicar aún) con reevaluación en 2026-04-19.
 - Acta de cierre aprobada publicada en `docs/hito7_cierre.md` (Go técnico y aprobación de roadmap registrada en 2026-04-05).
-- Siguiente ciclo habilitado: estabilización de pendientes técnicos transversales (Hito 2 SDK real, Hito 4 FLAN-T5/colas, y política de circuit breaker distribuido).
+- Siguiente ciclo habilitado: estabilización de pendientes técnicos transversales (Hito 2 SDK real y Hito 4 FLAN-T5/colas).

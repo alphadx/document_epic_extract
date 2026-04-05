@@ -11,7 +11,7 @@ Este documento consolida el estado real de avance por hito con foco en: **logros
 | Hito 0 — Kickoff | Cerrado | 100% | `LICENSE`, `README.md`, `CONTRIBUTING.md`, `plan.md` | Ninguno |
 | Hito 1 — Fundación/Core | Cerrado | 100% | CI + contrato base + `/extract` | Ninguno |
 | Hito 2 — OCR cloud | En progreso | 85% | Adaptadores + tests + modo mock + intento SDK real | Matriz completa SDK real con credenciales/timeout/proveedor caído |
-| Hito 3 — LiteLLM + Prebuilt | Cerrado | 100% | Adapter LiteLLM + contrato OpenAPI + CI contract checks | Circuit breaker distribuido (mejora posterior) |
+| Hito 3 — LiteLLM + Prebuilt | Cerrado | 100% | Adapter LiteLLM + contrato OpenAPI + CI contract checks | Ninguno (circuit breaker distribuido ya implementado) |
 | Hito 4 — Ejecución local | Cerrado (operativo) | 90% | `SmolVLM2Adapter` + contrato worker + e2e local | `FlanT5Adapter` mini/base + hardening de colas |
 | Hito 5 — Demo frontend | Cerrado (operativo) | 100% | Manejo de errores + sesión + pruebas demo | Mejoras UX no bloqueantes |
 | Hito 6 — Docs/OSS | Cerrado (operativo) | 95% | Guías operativas + checklist release + versionado contrato | Publicación PyPI (opcional, dependiente de decisión) |
@@ -89,7 +89,7 @@ Este documento consolida el estado real de avance por hito con foco en: **logros
 - `docs/milestone_decisions.md` (Hito 3).
 
 ### Riesgo residual (no bloqueante)
-- Circuit breaker distribuido en despliegues multi-réplica.
+- Sin riesgos residuales abiertos específicos de circuit breaker (pasó a operación y monitoreo continuo).
 
 ---
 
@@ -170,4 +170,4 @@ Este documento consolida el estado real de avance por hito con foco en: **logros
 
 1. Cerrar brecha técnica de Hito 2 con matriz SDK real certificada.
 2. Planificar evolución local de Hito 4 (`FlanT5Adapter` + colas) como próximo bloque técnico.
-3. Definir política operativa de circuit breaker distribuido para despliegues multi-réplica.
+3. Ejecutar seguimiento operativo post-implementación de circuit breaker distribuido (umbrales, alertas y tuning por proveedor).

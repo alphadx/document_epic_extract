@@ -1,7 +1,7 @@
 # Política Operativa — Circuit Breaker Distribuido (multi-réplica)
 
 Fecha: 2026-04-05  
-Estado: Aprobada para implementación incremental
+Estado: Implementada (fases A/B/C completadas)
 Owner: Equipo Core OmniExtract (API/Plataforma)
 
 ## 1. Objetivo
@@ -121,14 +121,17 @@ Evento por transición:
 ### Fase A (rápida)
 - Mantener store en memoria actual como fallback.
 - Agregar interfaz de store con implementación Redis opcional.
+ - Estado: **completada**.
 
 ### Fase B
 - Activar Redis en entornos staging/prod.
 - Añadir pruebas de concurrencia multi-réplica simulada.
+ - Estado: **completada** (atomicidad + CAS + pruebas de concurrencia).
 
 ### Fase C
 - Activar half-open con cupo y métricas completas.
 - Ajustar umbrales con datos reales de operación.
+ - Estado: **completada** (half-open con cupo + métricas + logs de transición).
 
 ## 12. Criterio de aceptación
 
@@ -137,3 +140,10 @@ Se considera implementada esta política cuando:
 - exista evidencia de pruebas de transición CLOSED→OPEN→HALF_OPEN→CLOSED,
 - métricas y logs estén visibles en tablero operativo,
 - runbook esté enlazado en documentación de release.
+
+## 13. Evidencia de implementación (cierre 2026-04-05)
+
+- Hito 1 (base/fallback): `docs/circuit_breaker_hito1_2026-04-05.md`.
+- Hito 2 (atomicidad/CAS): `docs/circuit_breaker_hito2_2026-04-05.md`.
+- Hito 3 (observabilidad/tablero): `docs/circuit_breaker_hito3_2026-04-05.md`.
+- Hito 4 (cierre final): `docs/circuit_breaker_hito4_cierre_2026-04-05.md`.
