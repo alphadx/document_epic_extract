@@ -284,6 +284,7 @@ Ver [plan.md](plan.md) para el plan completo de fases.
 Para trazabilidad de decisiones por hito, ver [docs/milestone_decisions.md](docs/milestone_decisions.md).
 Para checklist operativo de Fase 3 (LiteLLM + Prebuilt Engine), ver [docs/hito3_checklist.md](docs/hito3_checklist.md).
 Para checklist operativo de Fase 4 (Ejecución Local), ver [docs/hito4_checklist.md](docs/hito4_checklist.md).
+Para checklist operativo de Fase 5 (Demo Front-end), ver [docs/hito5_checklist.md](docs/hito5_checklist.md).
 Para contrato final API↔Worker local, ver [docs/local_worker_contract.md](docs/local_worker_contract.md).
 
 - **Fase 0** — Base del repositorio: licencia, convenciones, DoD y análisis inicial de seguridad
@@ -293,6 +294,32 @@ Para contrato final API↔Worker local, ver [docs/local_worker_contract.md](docs
 - **Fase 4** — Ejecución Local (SmolVLM2 + FLAN-T5 mini/base en CPU o GPU)
 - **Fase 5** — Demo Front-end (Streamlit)
 - **Fase 6** — Documentación & Open Source Release
+
+
+### Estado de Hito 5 (avance)
+
+- Checklist operativo de cierre publicado en `docs/hito5_checklist.md`.
+- Demo Streamlit endurecido con errores HTTP accionables, persistencia en sesión y fallback de preview para archivos no imagen.
+- Pruebas unitarias añadidas para helpers críticos del demo.
+- Pendientes de cierre: guía de troubleshooting dedicada, mensajes más guiados por tipo de error (`422`/`401`/`403`) y una prueba de integración de lógica UI sin red externa.
+
+Comandos de verificación actuales:
+
+```bash
+ruff check .
+pytest -q
+```
+
+#### Matriz de compatibilidad del Demo (referencial)
+
+| Provider | Modelo (ejemplo) | Estado en demo | Requiere API key |
+| --- | --- | --- | --- |
+| `aws` | `textract-analyze-document` | Soportado (vía adapter OCR) | Sí |
+| `gcp` | `documentai-form-parser` | Soportado (vía adapter OCR) | Sí |
+| `azure` | `prebuilt-document` | Soportado (vía adapter OCR) | Sí |
+| `llm_router` | `gpt-4o` / `claude-3-5-sonnet-20241022` | Soportado (vía LiteLLM) | Sí |
+| `local` | `smolvlm2-2.2b-instruct` | Soportado (requiere worker local) | No |
+
 
 ### Cierre de Hito 0 (resumen)
 
@@ -380,3 +407,5 @@ Distribuido bajo licencia **MIT**. Ver [LICENSE](LICENSE) para más información
 ---
 
 *Construido con ❤️ por la comunidad — contributions welcome!*
+
+

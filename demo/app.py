@@ -2,6 +2,10 @@
 
 import streamlit as st
 
+from demo.components.api_client import build_extract_payload, call_extract
+from demo.components.comparison_panel import show_comparison
+from demo.components.uploader import encode_document
+
 st.set_page_config(
     page_title="OmniExtract Gateway Demo",
     page_icon="📄",
@@ -13,6 +17,9 @@ st.caption(
     "Unified document extraction: compare OCR cloud providers and LLMs "
     "side-by-side with a single standardized output schema."
 )
+
+if "extraction_result" not in st.session_state:
+    st.session_state.extraction_result = None
 
 # ── Sidebar: Engine Configuration ────────────────────────────────────────────
 with st.sidebar:
@@ -31,6 +38,9 @@ with st.sidebar:
 
     st.subheader("Engine B (optional)")
     enable_b = st.checkbox("Enable side-by-side comparison", value=False)
+    engine_b_provider = ""
+    engine_b_model = ""
+    engine_b_key = ""
     if enable_b:
         engine_b_provider = st.selectbox(
             "Provider B",
@@ -69,12 +79,7 @@ with col_target:
 # ── Extraction Button ─────────────────────────────────────────────────────────
 st.divider()
 if st.button("🚀 Extract", type="primary", disabled=uploaded_file is None):
-    from demo.components.comparison_panel import show_comparison
-    from demo.components.uploader import encode_document
-
     with st.spinner("Extracting..."):
-        import httpx
-
         doc_b64 = encode_document(uploaded_file)
         custom_fields = (
             [f.strip() for f in custom_fields_input.splitlines() if f.strip()]
@@ -82,49 +87,57 @@ if st.button("🚀 Extract", type="primary", disabled=uploaded_file is None):
             else None
         )
 
-        payload = {
-            "document": doc_b64,
-            "engine_config": {
-                "provider": engine_a_provider,
-                "model": engine_a_model,
-                "api_keys": {engine_a_provider: engine_a_key} if engine_a_key else {},
-            },
-            "extraction_target": {
-                "document_type": doc_type,
-                "custom_fields": custom_fields,
-            },
-        }
+        payload_a = build_extract_payload(
+            document_b64=doc_b64,
+            provider=engine_a_provider,
+            model=engine_a_model,
+            api_key=engine_a_key,
+            document_type=doc_type,
+            custom_fields=custom_fields,
+        )
 
-        try:
-            resp_a = httpx.post(f"{api_url}/extract", json=payload, timeout=60)
-            result_a = resp_a.json()
-        except Exception as exc:
-            st.error(f"Engine A failed: {exc}")
-            result_a = None
+        response_a = call_extract(api_url=api_url, payload=payload_a)
+        result_a = response_a.payload if response_a.ok else None
+
+        if not response_a.ok:
+            st.error(f"Engine A failed: {response_a.error}")
 
         result_b = None
+        response_b_error = None
         if enable_b and result_a:
-            payload_b = {**payload}
-            payload_b["engine_config"] = {
-                "provider": engine_b_provider,
-                "model": engine_b_model,
-                "api_keys": {engine_b_provider: engine_b_key} if engine_b_key else {},
-            }
-            try:
-                resp_b = httpx.post(f"{api_url}/extract", json=payload_b, timeout=60)
-                result_b = resp_b.json()
-            except Exception as exc:
-                st.warning(f"Engine B failed: {exc}")
+            payload_b = build_extract_payload(
+                document_b64=doc_b64,
+                provider=engine_b_provider,
+                model=engine_b_model,
+                api_key=engine_b_key,
+                document_type=doc_type,
+                custom_fields=custom_fields,
+            )
+            response_b = call_extract(api_url=api_url, payload=payload_b)
+            result_b = response_b.payload if response_b.ok else None
+            if not response_b.ok:
+                response_b_error = response_b.error
+                st.warning(f"Engine B failed: {response_b.error}")
 
-    if result_a:
-        st.success("Extraction complete!")
-        show_comparison(
-            uploaded_file=uploaded_file,
-            result_a=result_a,
-            result_b=result_b,
-            label_a=f"{engine_a_provider} / {engine_a_model}",
-            label_b=f"{engine_b_provider} / {engine_b_model}" if enable_b else None,
-        )
-else:
-    if uploaded_file is None:
-        st.info("👆 Upload a document to get started.")
+        st.session_state.extraction_result = {
+            "uploaded_file": uploaded_file,
+            "result_a": result_a,
+            "result_b": result_b,
+            "label_a": f"{engine_a_provider} / {engine_a_model}",
+            "label_b": f"{engine_b_provider} / {engine_b_model}" if enable_b else None,
+            "error_a": response_a.error if not response_a.ok else None,
+            "error_b": response_b_error,
+        }
+
+stored = st.session_state.extraction_result
+if stored and stored.get("result_a"):
+    st.success("Extraction complete!")
+    show_comparison(
+        uploaded_file=stored["uploaded_file"],
+        result_a=stored["result_a"],
+        result_b=stored.get("result_b"),
+        label_a=stored["label_a"],
+        label_b=stored.get("label_b"),
+    )
+elif uploaded_file is None:
+    st.info("👆 Upload a document to get started.")

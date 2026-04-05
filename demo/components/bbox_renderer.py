@@ -5,7 +5,7 @@ from __future__ import annotations
 from io import BytesIO
 
 import streamlit as st
-from PIL import Image, ImageDraw
+from PIL import Image, ImageDraw, UnidentifiedImageError
 
 
 def render_bboxes(image_bytes: bytes, fields: list[dict]) -> None:
@@ -16,7 +16,12 @@ def render_bboxes(image_bytes: bytes, fields: list[dict]) -> None:
         image_bytes: Raw bytes of the original document image.
         fields: List of ExtractedField dicts with optional bounding_box.
     """
-    img = Image.open(BytesIO(image_bytes)).convert("RGB")
+    try:
+        img = Image.open(BytesIO(image_bytes)).convert("RGB")
+    except (UnidentifiedImageError, OSError):
+        st.info("Preview no disponible para este archivo (ej. PDF sin rasterización).")
+        return
+
     draw = ImageDraw.Draw(img)
     w, h = img.size
 
