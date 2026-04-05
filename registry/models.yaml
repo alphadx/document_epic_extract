@@ -134,3 +134,11 @@ providers:
         vision: true
         context_window: 8000
         requires_gpu: false
+      - id: flan-t5-mini
+        vision: false
+        context_window: 2048
+        requires_gpu: false
+      - id: flan-t5-base
+        vision: false
+        context_window: 2048
+        requires_gpu: false
