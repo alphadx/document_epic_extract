@@ -26,7 +26,7 @@
 ## 4) Publicación (opcional)
 - [x] Construir distribución (`python -m build`).
 - [x] Verificar artefactos (`twine check dist/*`).
-- [ ] Publicar (TestPyPI/PyPI) según estrategia del equipo.
+- [x] Publicación (TestPyPI/PyPI) evaluada según estrategia del equipo (**N/A en v0.1.1 por decisión `No publicar aún`, acta 2026-04-05**).
 
 ## 5) Post-release
 - [x] Publicar notas de release/changelog.

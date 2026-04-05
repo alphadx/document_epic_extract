@@ -393,13 +393,13 @@ document_epic_extract/
 - [x] Especificación OpenAPI/Swagger completa.
 - [x] Guía para agregar nuevos modelos al *registry*.
 - [x] Guía para crear Custom Prebuilts.
-- [ ] Publicación en PyPI (opcional).
+- [x] Decisión de distribución ejecutada para PyPI/TestPyPI: **No publicar aún** (diferimiento controlado; reevaluación 2026-04-19).
 
 ### Fase 7 — Estabilización y Release Público
 - [x] Definir gate reproducible de pre-release (`make release-readiness`).
 - [x] Ejecutar release candidate `v0.1.1-rc1` con decisión Go/No-Go documentada.
 - [x] Promoción a versión estable (`v0.1.1`) y notas finales de release.
-- [x] Seguimiento post-release y decisión de publicación en PyPI/TestPyPI (checklist operativo: `docs/hito7_checklist.md`, cierre propuesto en `docs/hito7_cierre.md`).
+- [x] Seguimiento post-release y decisión de publicación en PyPI/TestPyPI (checklist operativo: `docs/hito7_checklist.md`, cierre aprobado en `docs/hito7_cierre.md`).
 
 ---
 

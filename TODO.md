@@ -24,9 +24,13 @@ Backlog único consolidado desde `plan.md`, checklists de hitos y decisiones ope
 
 ## Prioridad baja
 
-- [ ] **Ejecutar publicación en PyPI** (si la decisión del equipo es publicarla).
-  - Referencia: pendiente en Fase 6 de `plan.md` (opcional).
-- [ ] **Revisión editorial trimestral de documentación** para mantener sincronía entre README, `docs/`, y `plan.md`.
+- [x] **Ejecutar decisión de publicación en PyPI/TestPyPI según acta vigente**.
+  - Resolución 2026-04-05: **No publicar aún** (diferimiento controlado); no se ejecuta upload hasta nueva aprobación.
+  - Owner: Release Manager (Equipo Core OmniExtract). Fecha de reevaluación: 2026-04-19.
+  - Referencias: `docs/hito7_distribution_decision.md`, `docs/hito7_cierre.md`, Fase 6 de `plan.md` (opcional).
+- [x] **Revisión editorial trimestral de documentación** para mantener sincronía entre README, `docs/`, y `plan.md`.
+  - Owner: Equipo Core OmniExtract (mantención documental). Fecha de ejecución: 2026-04-05.
+  - Evidencia: `docs/editorial_review_2026q2.md`.
 
 ## Tareas de documentación (este cambio)
 
