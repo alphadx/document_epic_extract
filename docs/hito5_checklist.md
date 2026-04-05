@@ -1,7 +1,7 @@
 # Hito 5 — Checklist de ejecución y cierre (Demo Front-end)
 
-Estado: **En progreso**  
-Última actualización: **2026-04-05 (avance técnico + guía de errores y compatibilidad)**
+Estado: **Cerrado (operativo)**  
+Última actualización: **2026-04-05 (cierre técnico + documental)**
 
 ## Objetivo del hito
 Cerrar un demo de producto **operativo, reproducible y verificable** en Streamlit que permita comparar motores de extracción (OCR, LLM Router y Local), detectar errores de integración temprano y servir como puerta de entrada para contribuciones.
@@ -30,12 +30,12 @@ Cerrar un demo de producto **operativo, reproducible y verificable** en Streamli
 ### 4) Pruebas y calidad del demo
 - [x] Añadir tests unitarios para componentes demo críticos (`encode_document`, `render_bboxes`, normalización de fields).
 - [x] Añadir al menos un test de integración de UI lógica (con funciones puras o helpers) sin depender de red externa.
-- [ ] Mantener quality gates globales en verde (`ruff check .`, `pytest -q`).
+- [x] Mantener quality gates globales en verde (`ruff check .`, `pytest -q`).
 
 ### 5) Documentación de cierre
-- [ ] Publicar guía de uso del demo (setup, ejemplos, troubleshooting) en `docs/`.
-- [ ] Actualizar `README.md` con estado de Hito 5 y comandos de verificación.
-- [ ] Registrar decisiones del hito en `docs/milestone_decisions.md` con evidencia de cierre.
+- [x] Publicar guía de uso del demo (setup, ejemplos, troubleshooting) en `docs/`.
+- [x] Actualizar `README.md` con estado de Hito 5 y comandos de verificación.
+- [x] Registrar decisiones del hito en `docs/milestone_decisions.md` con evidencia de cierre.
 
 ## Riesgos de seguimiento
 - Render de PDF: `bbox_renderer` asume imagen raster y puede fallar con PDF binario.
@@ -44,3 +44,7 @@ Cerrar un demo de producto **operativo, reproducible y verificable** en Streamli
 
 ## Criterio para avanzar al siguiente hito
 Hito 5 se considera cerrado cuando el demo pueda ejecutarse de forma reproducible, manejar errores comunes de integración sin ambigüedad, conservar resultados en sesión y contar con pruebas/documentación mínima de operación.
+
+## Evidencia de cierre
+- Quality gates verificados en entorno local con `ruff check .` y `pytest -q`.
+- Documentación de transición a Fase 6 publicada en `docs/hito6_checklist.md`.

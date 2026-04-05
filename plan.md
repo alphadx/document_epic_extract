@@ -371,29 +371,35 @@ document_epic_extract/
 - [x] Tests de integración contra las APIs de nube (mocked).
 
 ### Fase 3 — Meta-Gateway LLM & LiteLLM
-- [ ] Integración de LiteLLM como router subyacente.
-- [ ] Implementación del `LiteLLMVisionAdapter`.
-- [ ] Motor de plantillas dinámicas (*Prebuilt Template Engine*).
-- [ ] Pruebas de ingeniería de prompts con modelos clave (Claude 3.5 Sonnet, GPT-4o, Qwen-VL).
-- [ ] Registro dinámico de modelos (`registry/models.yaml`).
+- [x] Integración de LiteLLM como router subyacente.
+- [x] Implementación del `LiteLLMVisionAdapter`.
+- [x] Motor de plantillas dinámicas (*Prebuilt Template Engine*).
+- [x] Pruebas de ingeniería de prompts con modelos clave (Claude 3.5 Sonnet, GPT-4o, Qwen-VL).
+- [x] Registro dinámico de modelos (`registry/models.yaml`).
 
 ### Fase 4 — Ejecución Local
-- [ ] Contenerización de SmolVLM2 y FLAN-T5 (mini/base) para CPU y GPU.
-- [ ] Implementación del `SmolVLM2Adapter` y `FlanT5Adapter`.
-- [ ] Configuración de colas de tareas ligeras (Celery/Redis) para inferencia asíncrona.
+- [x] Contenerización de SmolVLM2 y contrato base de worker local (CPU/GPU path inicial).
+- [x] Implementación del `SmolVLM2Adapter`.
+- [ ] Implementación del `FlanT5Adapter` (mini/base) y hardening de colas asíncronas.
 
 ### Fase 5 — Demo Front-end
-- [ ] Construcción de la interfaz Streamlit/Gradio.
-- [ ] Panel de comparación side-by-side.
-- [ ] Visualizador de bounding boxes.
-- [ ] Gestión segura de API keys en la sesión.
+- [x] Construcción de la interfaz Streamlit/Gradio.
+- [x] Panel de comparación side-by-side.
+- [x] Visualizador de bounding boxes.
+- [x] Gestión segura de API keys en la sesión.
 
 ### Fase 6 — Documentación y Open Source
-- [ ] Redacción de `CONTRIBUTING.md`.
-- [ ] Especificación OpenAPI/Swagger completa.
-- [ ] Guía para agregar nuevos modelos al *registry*.
-- [ ] Guía para crear Custom Prebuilts.
+- [x] Redacción de `CONTRIBUTING.md`.
+- [x] Especificación OpenAPI/Swagger completa.
+- [x] Guía para agregar nuevos modelos al *registry*.
+- [x] Guía para crear Custom Prebuilts.
 - [ ] Publicación en PyPI (opcional).
+
+### Fase 7 — Estabilización y Release Público
+- [x] Definir gate reproducible de pre-release (`make release-readiness`).
+- [x] Ejecutar release candidate `v0.1.1-rc1` con decisión Go/No-Go documentada.
+- [x] Promoción a versión estable (`v0.1.1`) y notas finales de release.
+- [ ] Seguimiento post-release y decisión de publicación en PyPI/TestPyPI.
 
 ---
 
@@ -443,4 +449,4 @@ Solo avanzar a Fase 1 cuando el equipo confirme que esta sección sigue vigente 
 
 ---
 
-*Última actualización: 2026-04-04 — Fase de Diseño Inicial*
+*Última actualización: 2026-04-05 — Roadmap sincronizado con release estable v0.1.1*
