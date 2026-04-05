@@ -10,7 +10,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 COPY pyproject.toml ./
 RUN pip install --no-cache-dir -e ".[worker]"
 
-COPY adapters/local/ ./adapters/local/
+# Copy worker sources (worker app depends on shared API schemas/exceptions)
+COPY api/ ./api/
+COPY adapters/ ./adapters/
 
 # Pre-download model weights at build time (optional, speeds up startup)
 # RUN python -c "from transformers import AutoProcessor, AutoModelForVision2Seq; \

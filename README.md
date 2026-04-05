@@ -283,6 +283,8 @@ streamlit run demo/app.py
 Ver [plan.md](plan.md) para el plan completo de fases.
 Para trazabilidad de decisiones por hito, ver [docs/milestone_decisions.md](docs/milestone_decisions.md).
 Para checklist operativo de Fase 3 (LiteLLM + Prebuilt Engine), ver [docs/hito3_checklist.md](docs/hito3_checklist.md).
+Para checklist operativo de Fase 4 (Ejecución Local), ver [docs/hito4_checklist.md](docs/hito4_checklist.md).
+Para contrato final API↔Worker local, ver [docs/local_worker_contract.md](docs/local_worker_contract.md).
 
 - **Fase 0** — Base del repositorio: licencia, convenciones, DoD y análisis inicial de seguridad
 - **Fase 1** — Fundación: FastAPI core + Pydantic schemas *(completada)*
@@ -313,16 +315,41 @@ ruff check .
 pytest -q
 ```
 
-### Avance de Hito 3 (parcial)
+### Cierre de Hito 3 (resumen)
 
-- `LiteLLMVisionAdapter` implementado con parseo robusto de JSON y manejo de errores.
-- Pruebas unitarias del adapter y prueba de integración básica de `POST /extract` con `provider=llm_router` (mock).
+- `LiteLLMVisionAdapter` implementado con parseo robusto, resiliencia (retry/backoff/circuit breaker) e integración de `POST /extract`.
+- Gobernanza de contrato OpenAPI cerrada con tests de contrato + snapshot versionado + job de CI dedicado.
+- Auditoría final de hito documentada en `docs/hito3_final_audit.md`.
 
-Comandos de verificación del avance:
+Comandos de verificación del cierre:
 
 ```bash
 ruff check .
 pytest -q
+```
+
+### Cierre de Hito 4 (resumen)
+
+- Hito 4 cerrado en estado operativo y documentado en `docs/hito4_checklist.md`.
+- `SmolVLM2Adapter` implementado con integración HTTP al Worker (`/infer`) y validación de contrato.
+- Contrato final del Worker documentado en `docs/local_worker_contract.md`.
+- Integración end-to-end sin mock payload validada en tests (`/extract` → `/infer`).
+
+Comandos de verificación del cierre:
+
+```bash
+ruff check .
+pytest -q
+```
+
+### Operación local CPU/GPU (Worker)
+
+```bash
+# CPU (smoke y desarrollo)
+LOCAL_WORKER_BACKEND=heuristic LOCAL_WORKER_DEVICE=cpu docker compose --profile local-models up worker -d
+
+# GPU (SmolVLM2 real, requiere runtime NVIDIA)
+LOCAL_WORKER_BACKEND=smolvlm2 LOCAL_WORKER_DEVICE=cuda docker compose --profile local-models up worker -d
 ```
 
 
