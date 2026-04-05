@@ -10,7 +10,7 @@
 
 **OmniExtract Gateway** es un meta-gateway de extracción documental unificado, contenerizado y de código abierto. Su propósito es abstraer la complejidad de extraer datos estructurados (texto, pares clave-valor, tablas y coordenadas) de imágenes o documentos, utilizando un único punto de entrada (API).
 
-El gateway trata a proveedores deterministas (AWS Textract, Azure Document Intelligence, GCP Document AI), modelos locales (SmolVLM2) y una extensa red de LLMs comerciales y de código abierto como **"Motores de Inferencia Intercambiables"**. El núcleo del sistema es agnóstico al motor; su responsabilidad es enrutar, inyectar contexto (mediante plantillas *prebuilt*) y estandarizar la salida en un esquema JSON predecible.
+El gateway trata a proveedores deterministas (AWS Textract, Azure Document Intelligence, GCP Document AI), modelos locales (SmolVLM2, FLAN-T5 mini/base) y una extensa red de LLMs comerciales y de código abierto como **"Motores de Inferencia Intercambiables"**. El núcleo del sistema es agnóstico al motor; su responsabilidad es enrutar, inyectar contexto (mediante plantillas *prebuilt*) y estandarizar la salida en un esquema JSON predecible.
 
 ### Estado de Hitos (resumen)
 
@@ -28,7 +28,7 @@ El sistema se distribuye en una arquitectura de microservicios orientada a conte
 | Contenedor | Descripción | Tecnologías Base |
 | :--- | :--- | :--- |
 | **API Core (Meta-Gateway)** | Siempre en ejecución. Recibe peticiones, valida *api keys*, enruta llamadas a la nube o a los nodos locales, y estandariza las respuestas. | FastAPI, Pydantic, LiteLLM (como router subyacente de LLMs). |
-| **Motor Local (Worker)** | Opcional. Ejecuta modelos que requieren GPU/CPU intensiva (Ej: SmolVLM2, flan-t5). Separado de la API para evitar bloqueos por carga térmica/memoria. | vLLM o Hugging Face Inference Endpoints (vía Docker). |
+| **Motor Local (Worker)** | Opcional. Ejecuta modelos que requieren GPU/CPU intensiva (Ej: SmolVLM2, flan-t5-mini y flan-t5-base (CPU/GPU)). Separado de la API para evitar bloqueos por carga térmica/memoria. | vLLM o Hugging Face Inference Endpoints (vía Docker). |
 | **Demo Client** | Aplicación cliente interactiva. Genera los *inputs*, muestra los resultados, y permite gestionar el estado del arte de las conexiones. | Streamlit o Gradio. |
 | **DB / Cache** | Almacenamiento ligero para los *prompts* personalizados de los "Documentos Prebuilt" y caché de respuestas para evitar sobrecostes. | Redis / SQLite. |
 
@@ -125,7 +125,7 @@ Se crean interfaces abstractas que cada motor debe cumplir:
 
 1. **OCR Adapter** — Traduce la salida propietaria de AWS/GCP/Azure al esquema `StandardizedExtraction`.
 2. **LLM Vision Adapter** — Utiliza **LiteLLM** para enrutar la petición al modelo correspondiente (OpenAI, Anthropic, DeepSeek, Qwen, Mistral, Docling, etc.). El desafío es forzar al LLM a devolver coordenadas mediante el *Prebuilt Template Engine*.
-3. **Local Adapter** — Envía la imagen y el tensor al contenedor *Worker* y formatea la salida de modelos como SmolVLM2.
+3. **Local Adapter** — Envía la imagen y/o texto al contenedor *Worker* y formatea la salida de modelos como SmolVLM2 y FLAN-T5 (mini/base) en CPU o GPU.
 
 ```
 adapters/
@@ -137,7 +137,8 @@ adapters/
 ├── llm/
 │   └── litellm_adapter.py  ← LiteLLMVisionAdapter
 └── local/
-    └── smolvlm2.py   ← SmolVLM2Adapter
+    ├── smolvlm2.py   ← SmolVLM2Adapter
+    └── flan_t5.py    ← FlanT5Adapter (mini/base; CPU/GPU)
 ```
 
 ---
@@ -363,11 +364,11 @@ document_epic_extract/
 - [x] CI/CD básico (GitHub Actions: lint + tests).
 
 ### Fase 2 — Adaptadores Deterministas
-- [ ] Implementación del `AWSTextractAdapter`.
-- [ ] Implementación del `GCPDocumentAIAdapter`.
-- [ ] Implementación del `AzureDocIntelligenceAdapter`.
-- [ ] Mapeo de salidas propietarias al esquema unificado.
-- [ ] Tests de integración contra las APIs de nube (mocked).
+- [x] Implementación del `AWSTextractAdapter`.
+- [x] Implementación del `GCPDocumentAIAdapter`.
+- [x] Implementación del `AzureDocIntelligenceAdapter`.
+- [x] Mapeo de salidas propietarias al esquema unificado.
+- [x] Tests de integración contra las APIs de nube (mocked).
 
 ### Fase 3 — Meta-Gateway LLM & LiteLLM
 - [ ] Integración de LiteLLM como router subyacente.
@@ -377,8 +378,8 @@ document_epic_extract/
 - [ ] Registro dinámico de modelos (`registry/models.yaml`).
 
 ### Fase 4 — Ejecución Local
-- [ ] Contenerización de SmolVLM2.
-- [ ] Implementación del `SmolVLM2Adapter`.
+- [ ] Contenerización de SmolVLM2 y FLAN-T5 (mini/base) para CPU y GPU.
+- [ ] Implementación del `SmolVLM2Adapter` y `FlanT5Adapter`.
 - [ ] Configuración de colas de tareas ligeras (Celery/Redis) para inferencia asíncrona.
 
 ### Fase 5 — Demo Front-end

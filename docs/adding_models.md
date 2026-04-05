@@ -23,7 +23,7 @@ providers:
 
 - `id` must match the identifier used by LiteLLM for that provider/model combination.
 - Set `vision: true` only for models that accept image or document input (multimodal).
-- For local models, add `requires_gpu: true/false`.
+- For local models, add `requires_gpu: true/false` and document whether it can run in CPU mode too (e.g., `flan-t5-mini` and `flan-t5-base` support CPU/GPU deployments).
 
 ## Testing a New Model
 

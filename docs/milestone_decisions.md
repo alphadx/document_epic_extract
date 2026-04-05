@@ -80,3 +80,37 @@ Estado: Cerrado
 - Riesgos pendientes: implementación real de adaptadores OCR/LLM/local (Fases 2–4).
 - Siguiente hito habilitado: Fase 2 — Adaptadores deterministas.
 
+
+
+## Hito 2 — Adaptadores OCR Cloud
+
+Fecha de inicio: 2026-04-04  
+Estado: En progreso
+
+### Decisiones tomadas (arranque)
+
+1. **No declarar cierre del hito con stubs**
+   - **Qué se decidió:** mantener explícitamente el estado "En progreso" mientras existan `NotImplementedError` en adaptadores OCR.
+   - **Por qué:** evita falsos positivos de avance y protege la trazabilidad técnica del roadmap.
+   - **Alternativas consideradas:** marcar cierre parcial por estructura base creada.
+   - **Impacto / trade-offs:** mayor rigor de cierre; pospone el pase a Fase 3 hasta completar integración real.
+
+2. **Formalizar checklist de cierre operativo del hito**
+   - **Qué se decidió:** documentar DoD y secuencia de implementación en `docs/hito2_cierre_operativo.md`.
+   - **Por qué:** asegurar ejecución sin cabos sueltos en implementación, pruebas y documentación.
+   - **Alternativas consideradas:** gestionar tareas sólo en conversación o issues.
+   - **Impacto / trade-offs:** mejora foco y control de avance; exige disciplina para mantener checklist actualizado.
+
+
+3. **Cubrir endpoint /extract por proveedor OCR en modo mock**
+   - **Qué se decidió:** agregar pruebas de integración por proveedor (AWS/Azure/GCP) contra `POST /extract` usando payload mock.
+   - **Por qué:** validar el contrato del gateway completo (router + adapter + esquema) y no sólo pruebas unitarias de adapters.
+   - **Alternativas consideradas:** mantener sólo pruebas unitarias por adapter.
+   - **Impacto / trade-offs:** mayor confianza en comportamiento end-to-end; todavía pendiente validación con SDK cloud real.
+
+### Evidencia de avance
+
+- Documento de cierre operativo creado: `docs/hito2_cierre_operativo.md`.
+- Riesgos actuales: falta completar conexión SDK cloud real (hoy se habilitó mapeo funcional basado en payload proveedor/mock).
+- Próximo paso inmediato: cerrar integración SDK real por proveedor (credenciales/timeout/proveedor caído) y conservar quality gates en verde.
+- Avance documental adicional: README actualizado con variables de entorno OCR cloud y ejemplo de uso en modo mock payload.

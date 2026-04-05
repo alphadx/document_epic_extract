@@ -80,6 +80,35 @@ curl -X POST http://localhost:8000/extract \
   }'
 ```
 
+
+### Variables de Entorno OCR Cloud (referencia rápida)
+
+Estas variables existen en `.env.example` para la parte OCR cloud:
+
+- AWS Textract: `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, `AWS_DEFAULT_REGION`
+- GCP Document AI: `GCP_PROJECT_ID`, `GCP_LOCATION`, `GCP_PROCESSOR_ID`, `GOOGLE_APPLICATION_CREDENTIALS`
+- Azure Document Intelligence: `AZURE_DOCUMENT_INTELLIGENCE_ENDPOINT`, `AZURE_DOCUMENT_INTELLIGENCE_KEY`
+
+### Ejemplo de prueba local con payload mock (OCR Cloud)
+
+> Útil para desarrollo y tests sin llamar al SDK cloud real.
+
+```bash
+curl -X POST http://localhost:8000/extract \
+  -H "Content-Type: application/json" \
+  -d '{
+    "document": "ignored",
+    "engine_config": {
+      "provider": "aws",
+      "model": "textract",
+      "api_keys": {
+        "mock_response_json": "{\"Blocks\":[{\"Id\":\"l1\",\"BlockType\":\"LINE\",\"Text\":\"Factura 100\"}]}"
+      }
+    },
+    "extraction_target": { "document_type": "invoice" }
+  }'
+```
+
 ### Respuesta Estandarizada
 
 ```json
@@ -186,6 +215,8 @@ document_epic_extract/
 | Modelo | Adapter |
 | :--- | :--- |
 | SmolVLM2-2.2B-Instruct | `adapters/local/smolvlm2.py` |
+| FLAN-T5 Mini | `adapters/local/flan_t5.py` *(planificado)* |
+| FLAN-T5 Base | `adapters/local/flan_t5.py` *(planificado, CPU/GPU)* |
 
 ---
 
@@ -256,7 +287,7 @@ Para trazabilidad de decisiones por hito, ver [docs/milestone_decisions.md](docs
 - **Fase 1** — Fundación: FastAPI core + Pydantic schemas *(completada)*
 - **Fase 2** — Adaptadores OCR Cloud (AWS, GCP, Azure)
 - **Fase 3** — Meta-Gateway LLM + LiteLLM + Prebuilt Engine
-- **Fase 4** — Ejecución Local (SmolVLM2)
+- **Fase 4** — Ejecución Local (SmolVLM2 + FLAN-T5 mini/base en CPU o GPU)
 - **Fase 5** — Demo Front-end (Streamlit)
 - **Fase 6** — Documentación & Open Source Release
 
