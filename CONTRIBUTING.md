@@ -154,6 +154,9 @@ pytest --cov=api --cov=adapters --cov-report=html
 # Lint with ruff
 ruff check .
 
+# Release readiness gate (incluye consistencia documental de circuit breaker)
+make release-readiness
+
 # Type check with mypy
 mypy api/ adapters/
 ```
@@ -169,5 +172,7 @@ mypy api/ adapters/
 - For new adapters, include mock-based integration tests.
 - For registry updates, no tests required — just verify the YAML is valid.
 - **Milestone rule:** if your PR closes or advances a milestone/hito, update `docs/milestone_decisions.md` with the decisions taken and their rationale.
+- **Circuit breaker docs rule:** if your PR changes circuit breaker behavior/state, update `README.md`, `TODO.md`, `docs/hitos_avances.md`, and `docs/milestone_decisions.md` (or run `make cb-consistency` and fix drift).
+- Use the PR checklist template in `.github/pull_request_template.md` before requesting review.
 
 Thank you for making OmniExtract Gateway better! 🚀

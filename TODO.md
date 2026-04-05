@@ -51,12 +51,6 @@ Backlog único consolidado desde `plan.md`, checklists de hitos y decisiones ope
 
 > Esta sección debe mantenerse con ítems **abiertos** y evidencia de cierre; evita “falsos verdes”.
 
-- [ ] **Implementar circuit breaker distribuido en producción multi-réplica (Redis + atomicidad + métricas).**
-  - Estado: política aprobada, implementación pendiente por fases A/B/C.
-  - Owner: Equipo Core OmniExtract (API/Plataforma).
-  - Fecha objetivo: 2026-04-19.
-  - Evidencia esperada: pruebas de transición CLOSED→OPEN→HALF_OPEN→CLOSED y tablero operativo.
-  - Referencia: `docs/circuit_breaker_distribuido.md`.
 - [ ] **Cerrar riesgo R7-01 de no-regresión contractual en consumo real.**
   - Estado: `Abierto` en registro de riesgos post-release.
   - Owner: Equipo Core OmniExtract (API/Plataforma).
@@ -69,6 +63,12 @@ Backlog único consolidado desde `plan.md`, checklists de hitos y decisiones ope
   - Fecha objetivo: 2026-04-19.
   - Evidencia esperada: acta actualizada + ejecución `make publish-testpypi-preflight` (y publish solo si aplica).
   - Referencia: `docs/hito7_distribution_decision.md`.
+
+## Cierres recientes (fuera de deuda abierta)
+
+- [x] **Circuit breaker distribuido multi-réplica (Redis + atomicidad + métricas).**
+  - Cierre ejecutado el 2026-04-05.
+  - Evidencia consolidada: `docs/circuit_breaker_distribuido.md`, `docs/circuit_breaker_hito1_2026-04-05.md`, `docs/circuit_breaker_hito2_2026-04-05.md`, `docs/circuit_breaker_hito3_2026-04-05.md`, `docs/circuit_breaker_hito4_cierre_2026-04-05.md`.
 
 ## Tareas de documentación (este cambio)
 

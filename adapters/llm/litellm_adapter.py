@@ -16,7 +16,7 @@ from adapters.llm.parsing import (
     resolve_required_fields,
     safe_api_kwargs,
 )
-from adapters.llm.resilience import circuit_breaker_store
+from adapters.llm.resilience import circuit_breaker_store, circuit_breaker_telemetry
 from api.core.config import settings
 from api.core.exceptions import ExtractionError
 from api.schemas.request import ExtractionRequest
@@ -75,9 +75,14 @@ class LiteLLMVisionAdapter(BaseAdapter):
         if request.engine_config.custom_endpoint:
             completion_kwargs["api_base"] = request.engine_config.custom_endpoint
 
-        model_key = request.engine_config.model
+        model_key = f"llm_router:{request.engine_config.model}"
+        state_before_guard = circuit_breaker_store.get_state(model_key)
         if circuit_breaker_store.is_open(model_key):
+            circuit_breaker_telemetry.increment_reject(model_key)
+            circuit_breaker_telemetry.set_state(model_key, "open")
             raise ExtractionError("Provider temporarily unavailable (circuit open).")
+        state_after_guard = circuit_breaker_store.get_state(model_key)
+        is_half_open_probe = state_after_guard == "half_open"
 
         acompletion = _litellm_acompletion()
         response = None
@@ -90,11 +95,26 @@ class LiteLLMVisionAdapter(BaseAdapter):
                 break
             except Exception as exc:  # noqa: BLE001
                 last_exc = exc
+                previous_state = circuit_breaker_store.get_state(model_key)
                 circuit_breaker_store.record_failure(
                     model_key,
                     threshold=settings.llm_circuit_breaker_threshold,
                     cooldown_ms=settings.llm_circuit_breaker_cooldown_ms,
                 )
+                new_state = circuit_breaker_store.get_state(model_key)
+                circuit_breaker_telemetry.set_state(model_key, new_state)
+                if previous_state != "open" and new_state == "open":
+                    circuit_breaker_telemetry.increment_open(model_key)
+                    circuit_breaker_telemetry.emit_transition_log(
+                        key=model_key,
+                        from_state=previous_state,
+                        to_state="open",
+                        reason="provider_error",
+                        cooldown_ms=settings.llm_circuit_breaker_cooldown_ms,
+                        failures=None,
+                    )
+                if previous_state == "half_open" or is_half_open_probe:
+                    circuit_breaker_telemetry.increment_half_open_probe(model_key, "failure")
                 if attempt < total_attempts - 1 and settings.llm_retry_backoff_ms > 0:
                     await asyncio.sleep(settings.llm_retry_backoff_ms / 1000)
 
@@ -102,6 +122,18 @@ class LiteLLMVisionAdapter(BaseAdapter):
             raise ExtractionError("Provider call failed for llm_router.") from last_exc
 
         circuit_breaker_store.reset(model_key)
+        circuit_breaker_telemetry.set_state(model_key, "closed")
+        if state_before_guard in {"open", "half_open"} or state_after_guard in {"open", "half_open"}:
+            circuit_breaker_telemetry.emit_transition_log(
+                key=model_key,
+                from_state=state_after_guard,
+                to_state="closed",
+                reason="success",
+                cooldown_ms=None,
+                failures=0,
+            )
+        if is_half_open_probe:
+            circuit_breaker_telemetry.increment_half_open_probe(model_key, "success")
 
         try:
             content = extract_message_content(response)

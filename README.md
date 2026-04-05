@@ -42,17 +42,24 @@ Se ejecutaron checks locales y están en verde:
 
 Estas tareas **no se marcan como hechas** hasta tener evidencia operativa:
 
-1. **Circuit breaker distribuido multi-réplica**
-   - Estado actual: política definida, implementación distribuida aún incremental.
-   - Falta: store Redis activo + pruebas de concurrencia + métricas/runbook cerrados.
-2. **Observación post-release de riesgos residuales**
+1. **Observación post-release de riesgos residuales**
    - Estado actual: riesgo R7-01 todavía abierto en registro de riesgos.
    - Falta: cerrar ventana de observación con evidencia sostenida de no-regresión en consumo real.
-3. **Decisión final de publicación de paquete**
+2. **Decisión final de publicación de paquete**
    - Estado actual: publicación diferida (no publicar aún).
    - Falta: reevaluación en fecha comprometida y ejecución (o nuevo diferimiento documentado).
 
 Ver backlog vivo y deuda técnica: [`TODO.md`](TODO.md).
+
+## Cierre técnico reciente (2026-04-05)
+
+- Circuit breaker distribuido multi-réplica implementado y cerrado con evidencia:
+  - Política + estado final: `docs/circuit_breaker_distribuido.md`
+  - Acta de cierre: `docs/circuit_breaker_hito4_cierre_2026-04-05.md`
+  - Acta de consistencia documental: `docs/acta_consistencia_circuit_breaker_2026-04-05.md`
+  - Definition of Done: `docs/circuit_breaker_definition_of_done_2026-04-05.md`
+  - Resumen ejecutivo: `docs/resumen_ejecutivo_circuit_breaker_2026-04-05.md`
+  - Handoff final: `docs/handoff_circuit_breaker_2026-04-05.md`
 
 ## Comenzar rápido (modo recomendado)
 
