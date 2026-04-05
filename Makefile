@@ -1,4 +1,4 @@
-.PHONY: test lint openapi-signature release-readiness
+.PHONY: test lint openapi-signature release-readiness package-check publish-testpypi-preflight publish-testpypi
 
 lint:
 	ruff check .
@@ -14,3 +14,14 @@ release-readiness:
 	pytest -q
 	python scripts/generate_openapi_signature.py
 	git diff --exit-code tests/fixtures/openapi_signature.json
+
+package-check:
+	python -m pip install -q build twine
+	python -m build
+	twine check dist/*
+
+publish-testpypi-preflight:
+	bash scripts/testpypi_publish_gate.sh
+
+publish-testpypi:
+	bash scripts/testpypi_publish_gate.sh --execute

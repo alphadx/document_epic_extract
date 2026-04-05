@@ -288,3 +288,38 @@ Estado: Cerrado (RC listo)
 - Release estable `v0.1.1` ejecutado con evidencia en `docs/release_v0.1.1.md`.
 - `plan.md` sincronizado con estado real de fases (F3–F6 cerradas y F7 abierta para release estable).
 - Siguiente hito habilitado: post-release (seguimiento de riesgos + canal de publicación PyPI/TestPyPI).
+
+## Hito 7 — Post-release y decisión de distribución
+
+Fecha de inicio: 2026-04-05  
+Fecha de cierre: 2026-04-05 (propuesto)  
+Estado: Cierre propuesto (pendiente de aprobación)
+
+### Decisiones tomadas (arranque)
+
+1. **No cerrar el hito solo por tener release estable en GitHub**
+   - **Qué se decidió:** exigir ventana de seguimiento post-release y registro de riesgos antes de declarar cierre.
+   - **Por qué:** un tag estable no sustituye evidencia operativa posterior al release.
+   - **Alternativas consideradas:** declarar cierre inmediato tras `v0.1.1`.
+   - **Impacto / trade-offs:** menor riesgo de cierres prematuros; requiere disciplina de monitoreo corto.
+
+2. **Forzar decisión explícita de canal de publicación**
+   - **Qué se decidió:** documentar decisión entre `No publicar aún`, `TestPyPI` o `PyPI` con criterio verificable.
+   - **Por qué:** evitar que PyPI quede como “pendiente eterno” entre hitos.
+   - **Alternativas consideradas:** mantener decisión abierta sin fecha/trigger.
+   - **Impacto / trade-offs:** clarifica ownership y próximos pasos; puede retrasar cierre si faltan credenciales.
+
+### Evidencia de avance
+
+- Checklist operativo de Hito 7 publicado: `docs/hito7_checklist.md`.
+- README actualizado para exponer estado explícito de Hito 7 y enlace al checklist.
+- Hito en estado de cierre propuesto: seguimiento post-release y decisión de canal documentados.
+- Estabilización de tests async añadida en `tests/conftest.py` para asegurar ejecución local reproducible de `pytest -q`.
+- Registro de riesgos post-release publicado en `docs/hito7_risk_register.md`.
+- Acta de decisión de distribución cerrada en `docs/hito7_distribution_decision.md` (diferimiento controlado).
+- Validación de empaquetado ejecutada (`python -m build` + `twine check dist/*`) con evidencia en `docs/hito7_packaging_validation.md`.
+- Metadata de licencia modernizada en `pyproject.toml` para eliminar warnings de deprecación de `setuptools` durante build.
+- Gate técnico de prepublicación TestPyPI añadido: `scripts/testpypi_publish_gate.sh` + targets `make publish-testpypi-preflight` / `make publish-testpypi`.
+- Decisión de distribución documentada: **diferir publicación** (No publicar aún) con reevaluación en 2026-04-19.
+- Acta de cierre propuesta publicada en `docs/hito7_cierre.md` (Go técnico; pendiente aprobación explícita del roadmap).
+- Siguiente hito habilitado tras aprobación: seguimiento de distribución (credenciales + publicación controlada en TestPyPI/PyPI).

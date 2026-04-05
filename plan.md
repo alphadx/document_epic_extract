@@ -399,7 +399,7 @@ document_epic_extract/
 - [x] Definir gate reproducible de pre-release (`make release-readiness`).
 - [x] Ejecutar release candidate `v0.1.1-rc1` con decisión Go/No-Go documentada.
 - [x] Promoción a versión estable (`v0.1.1`) y notas finales de release.
-- [ ] Seguimiento post-release y decisión de publicación en PyPI/TestPyPI.
+- [x] Seguimiento post-release y decisión de publicación en PyPI/TestPyPI (checklist operativo: `docs/hito7_checklist.md`, cierre propuesto en `docs/hito7_cierre.md`).
 
 ---
 
