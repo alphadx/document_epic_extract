@@ -52,3 +52,11 @@ class ExtractionRequest(BaseModel):
     )
     engine_config: EngineConfig
     extraction_target: ExtractionTarget
+
+
+class CustomPrebuiltRequest(BaseModel):
+    """Request body for registering a custom prebuilt template."""
+
+    id: str = Field(..., description="Unique prebuilt identifier.")
+    display_name: str = Field(..., description="Human-readable template name.")
+    fields: list[str] = Field(..., min_length=1, description="Fields required by the template.")

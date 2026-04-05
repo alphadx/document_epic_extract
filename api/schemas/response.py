@@ -62,3 +62,23 @@ class StandardizedExtraction(BaseModel):
         default=None,
         description="Wall-clock time in milliseconds for the extraction call.",
     )
+
+
+class PrebuiltMetadata(BaseModel):
+    """Metadata for listing available prebuilts."""
+
+    id: str
+    display_name: str
+    version: str
+    required_fields: list[str] = Field(default_factory=list)
+
+
+class CustomPrebuiltResponse(BaseModel):
+    """Response model for a registered custom prebuilt."""
+
+    id: str
+    display_name: str
+    version: str
+    system_prompt: str
+    required_fields: list[str] = Field(default_factory=list)
+    output_schema: str
