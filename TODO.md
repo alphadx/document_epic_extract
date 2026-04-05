@@ -22,7 +22,7 @@ Backlog único consolidado desde `plan.md`, checklists de hitos y decisiones ope
 - [ ] **Implementar `FlanT5Adapter` (mini/base)** y cerrar hardening de colas asíncronas del worker local.
   - Referencia: tarea pendiente en Fase 4 de `plan.md`.
 - [ ] **Cerrar integración SDK cloud real** (credenciales/timeout/proveedor caído) para AWS/GCP/Azure con evidencia de pruebas.
-  - Avance 2026-04-05: bitácora de preparación y evidencia de entorno en `docs/ocr_live_evidence_2026-04-05.md` + plantilla de corrida en `docs/plantilla_corrida_live_ocr.md` (pendiente ejecución live con credenciales completas).
+  - Avance 2026-04-05: bitácora de preparación (`docs/ocr_live_evidence_2026-04-05.md`), plantilla (`docs/plantilla_corrida_live_ocr.md`) y corrida controlada (`docs/ocr_live_run_controlled_2026-04-05.md`); pendiente ejecución live completa con credenciales válidas + escenarios de timeout/proveedor caído en entorno habilitado.
   - Referencia: pendiente explícito en `docs/hito2_cierre_operativo.md`.
 - [x] **Definir política operativa de circuit breaker distribuido** para despliegues multi-réplica.
   - Resolución 2026-04-05: política base aprobada para implementación incremental.

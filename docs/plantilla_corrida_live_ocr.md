@@ -5,6 +5,16 @@ Owner sugerido: Equipo Core OmniExtract (API/Plataforma)
 
 > Objetivo: ejecutar y evidenciar de forma controlada los escenarios **credenciales válidas**, **timeout** y **proveedor caído** por proveedor cloud, sin ambigüedad de configuración.
 
+## 0) Ejecución automatizada opcional
+
+Puedes generar una corrida controlada automática (con marcas `PASS/SKIPPED/MANUAL_REQUIRED`) con:
+
+```bash
+python scripts/run_ocr_live_controlled.py
+```
+
+El reporte se guarda como `docs/ocr_live_run_controlled_<YYYY-MM-DD>.md`.
+
 ## 1) Pre-flight (obligatorio)
 
 - [ ] API levantada localmente (`uvicorn api.main:app --host 0.0.0.0 --port 8000`).

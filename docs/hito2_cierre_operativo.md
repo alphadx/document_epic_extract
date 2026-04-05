@@ -96,3 +96,9 @@ Solo avanzar cuando todos los checkboxes de DoD estén completados y la evidenci
 - Resultado del entorno de ejecución actual: escenarios live marcados como `SKIPPED` cuando faltan credenciales/requisitos de red por proveedor.
 
 - Se publicó plantilla de ejecución controlada en `docs/plantilla_corrida_live_ocr.md` para estandarizar evidencia por escenario/proveedor.
+
+
+## Avance 6 (2026-04-05)
+
+- Se agregó ejecución controlada automatizable con `scripts/run_ocr_live_controlled.py`.
+- Se generó reporte de corrida en `docs/ocr_live_run_controlled_2026-04-05.md` con estados `PASS/SKIPPED/MANUAL_REQUIRED` según configuración del entorno.
