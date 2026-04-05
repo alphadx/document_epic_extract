@@ -4,7 +4,7 @@ import pytest
 
 from api.core.exceptions import EngineNotFoundError
 from api.schemas.request import EngineConfig, ExtractionRequest, ExtractionTarget
-from api.services.router_service import _ADAPTER_MAP, _load_adapter
+from api.services.router_service import _ADAPTER_MAP, _load_adapter, _resolve_adapter_path
 
 
 class TestAdapterMap:
@@ -17,6 +17,13 @@ class TestAdapterMap:
         for provider, dotted_path in _ADAPTER_MAP.items():
             cls = _load_adapter(dotted_path)
             assert cls is not None, f"Adapter for '{provider}' could not be loaded"
+
+
+    def test_local_flan_t5_routes_to_flan_adapter(self):
+        assert _resolve_adapter_path("local", "flan-t5-base") == "adapters.local.flant5.FlanT5Adapter"
+
+    def test_local_non_flan_routes_to_smol_adapter(self):
+        assert _resolve_adapter_path("local", "smolvlm2-2.2b-instruct") == _ADAPTER_MAP["local"]
 
 
 class TestRouterServiceRaisesOnUnknownProvider:

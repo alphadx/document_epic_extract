@@ -149,6 +149,13 @@ Estado: Cerrado
 - Riesgos pendientes: monitoreo en producción de variabilidad por proveedor LLM; circuit breaker distribuido en despliegues multi-réplica.
 - Siguiente hito habilitado: Fase 4 — Ejecución Local (SmolVLM2).
 
+### Addendum operativo (2026-04-05)
+
+- **Qué se decidió:** establecer política operativa de circuit breaker distribuido con estado compartido (Redis), transición `closed/open/half_open`, runbook y métricas mínimas.
+- **Por qué:** eliminar divergencia de estado entre réplicas y reducir cascadas de fallo en proveedores externos.
+- **Evidencia:** `docs/circuit_breaker_distribuido.md`.
+- **Estado del riesgo:** mitigación definida a nivel operativo; pendiente implementación completa del store distribuido en runtime.
+
 
 ## Hito 4 — Ejecución Local (SmolVLM2)
 

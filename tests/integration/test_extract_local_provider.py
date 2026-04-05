@@ -52,3 +52,27 @@ def test_extract_local_returns_502_for_invalid_mock_payload():
 
     assert resp.status_code == 502
     assert "Invalid local mock payload JSON" in resp.json()["detail"]
+
+
+def test_extract_local_flan_model_uses_flan_adapter_with_mock_payload():
+    mock_payload = {
+        "raw_text": "invoice_number: INV-2026",
+        "fields": [{"key": "invoice_number", "value": "INV-2026"}],
+        "tables": [],
+    }
+    body = {
+        "document": "ignored-in-mock-mode",
+        "engine_config": {
+            "provider": "local",
+            "model": "flan-t5-base",
+            "api_keys": {"mock_response_json": json.dumps(mock_payload)},
+        },
+        "extraction_target": {"document_type": "invoice"},
+    }
+
+    resp = client.post("/extract", json=body)
+
+    assert resp.status_code == 200
+    payload = resp.json()
+    assert payload["raw_text"] == "invoice_number: INV-2026"
+    assert payload["engine_used"] == "local:flan-t5-base"

@@ -15,11 +15,19 @@ Backlog único consolidado desde `plan.md`, checklists de hitos y decisiones ope
 
 ## Prioridad media
 
+> Plan de ejecución por etapas: `docs/plan_trabajo_prioridad_media.md` (creado el 2026-04-05).
+
+> Avance actual: Tramo 3 en progreso: evidencia cloud real parcial (matriz de fallas) y política de circuit breaker distribuido ya definida.
+
 - [ ] **Implementar `FlanT5Adapter` (mini/base)** y cerrar hardening de colas asíncronas del worker local.
   - Referencia: tarea pendiente en Fase 4 de `plan.md`.
 - [ ] **Cerrar integración SDK cloud real** (credenciales/timeout/proveedor caído) para AWS/GCP/Azure con evidencia de pruebas.
+  - Avance 2026-04-05: bitácora de preparación y evidencia de entorno en `docs/ocr_live_evidence_2026-04-05.md` (pendiente ejecución live con credenciales completas).
   - Referencia: pendiente explícito en `docs/hito2_cierre_operativo.md`.
-- [ ] **Definir política operativa de circuit breaker distribuido** para despliegues multi-réplica.
+- [x] **Definir política operativa de circuit breaker distribuido** para despliegues multi-réplica.
+  - Resolución 2026-04-05: política base aprobada para implementación incremental.
+  - Owner: Equipo Core OmniExtract (API/Plataforma).
+  - Evidencia: `docs/circuit_breaker_distribuido.md`.
   - Referencia: riesgo pendiente en `docs/milestone_decisions.md` (Hito 3).
 
 ## Prioridad baja

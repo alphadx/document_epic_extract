@@ -80,3 +80,17 @@ Solo avanzar cuando todos los checkboxes de DoD estén completados y la evidenci
 - Los adaptadores OCR ahora intentan llamada a SDK real cuando no se provee `mock_response_json`.
 - Se agregó normalización transversal de errores de proveedor (auth/timeout/provider error) para respuesta homogénea vía `ExtractionError`.
 - Se mantiene modo mock como fallback de desarrollo para pruebas locales.
+
+
+## Avance 4 (2026-04-05)
+
+- Se añadió matriz de fallas de integración OCR en `tests/integration/test_extract_ocr_failure_matrix.py` cubriendo por proveedor (AWS/GCP/Azure) los escenarios de **credenciales**, **timeout** y **proveedor caído**.
+- Se validó que `POST /extract` devuelve `502` con mensajes normalizados por proveedor para cada escenario de falla.
+- Se mantiene la recomendación de ejecutar, además, pruebas con credenciales reales en entorno controlado para evidencia final de cierre operativo.
+
+
+## Avance 5 (2026-04-05)
+
+- Se incorporó script de evidencia `scripts/collect_ocr_live_evidence.py` para levantar bitácora reproducible de preparación de pruebas cloud reales (AWS/GCP/Azure).
+- Se generó evidencia del entorno actual en `docs/ocr_live_evidence_2026-04-05.md`.
+- Resultado del entorno de ejecución actual: escenarios live marcados como `SKIPPED` cuando faltan credenciales/requisitos de red por proveedor.

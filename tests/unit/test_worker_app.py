@@ -34,3 +34,21 @@ def test_worker_infer_returns_contract_result():
     assert "device" in payload
     assert payload["result"]["engine_used"] == "local_worker:smolvlm2-2.2b-instruct"
     assert payload["result"]["fields"][0]["key"] == "invoice_number"
+
+
+def test_worker_infer_flan_t5_model_routes_backend():
+    text_payload = "invoice_number: INV-55\ntotal_amount: 55.00"
+    document = base64.b64encode(text_payload.encode("utf-8")).decode("utf-8")
+    body = {
+        "document": document,
+        "engine_config": {"provider": "local", "model": "flan-t5-base"},
+        "extraction_target": {"document_type": "invoice"},
+    }
+
+    resp = client.post("/infer", json=body)
+    assert resp.status_code == 200
+    payload = resp.json()
+
+    assert payload["backend"] == "flan_t5"
+    assert payload["result"]["engine_used"] == "local_worker:flan-t5-base"
+    assert payload["result"]["fields"][0]["key"] == "invoice_number"

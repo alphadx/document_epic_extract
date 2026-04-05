@@ -27,6 +27,18 @@ def _load_adapter(dotted_path: str):
     return getattr(module, class_name)
 
 
+def _resolve_adapter_path(provider: str, model: str) -> str:
+    """Resolve adapter dotted path, allowing local routing by model family."""
+    if provider != "local":
+        return _ADAPTER_MAP[provider]
+
+    normalized_model = (model or "").lower()
+    if "flan-t5" in normalized_model:
+        return "adapters.local.flant5.FlanT5Adapter"
+
+    return _ADAPTER_MAP[provider]
+
+
 async def route_extraction(request: ExtractionRequest) -> StandardizedExtraction:
     """
     Select the appropriate engine adapter and execute the extraction.
@@ -38,7 +50,7 @@ async def route_extraction(request: ExtractionRequest) -> StandardizedExtraction
     if provider not in _ADAPTER_MAP:
         raise EngineNotFoundError(provider)
 
-    adapter_class = _load_adapter(_ADAPTER_MAP[provider])
+    adapter_class = _load_adapter(_resolve_adapter_path(provider, request.engine_config.model))
     adapter = adapter_class()
 
     start = time.monotonic()
