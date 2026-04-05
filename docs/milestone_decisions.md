@@ -185,3 +185,37 @@ Estado: Cerrado (operativo)
 - Checks de calidad en verde: `ruff check .` y `pytest -q`.
 - Riesgos post-cierre: tuning de rendimiento en GPU y pruebas de carga para escenario productivo.
 - Siguiente hito habilitado: Fase 5 — Demo Front-end.
+
+## Hito 5 — Demo Front-end (Streamlit)
+
+Fecha de inicio: 2026-04-05  
+Estado: En progreso
+
+### Decisiones tomadas (arranque)
+
+1. **No declarar cierre del hito con sólo UI feliz (happy path)**
+   - **Qué se decidió:** mantener Hito 5 en “En progreso” hasta cubrir errores HTTP accionables, estado de sesión y pruebas mínimas del demo.
+   - **Por qué:** un demo sin manejo de fallos reales puede ocultar problemas de integración y generar falsa sensación de cierre.
+   - **Alternativas consideradas:** cerrar por disponibilidad visual del flujo base (upload + extract + comparación).
+   - **Impacto / trade-offs:** aumenta el trabajo de hardening, pero reduce retrabajo y soporte reactivo.
+
+2. **Formalizar DoD con checklist dedicado para evitar cabos sueltos**
+   - **Qué se decidió:** crear `docs/hito5_checklist.md` con alcance obligatorio, riesgos y criterio explícito para pasar al siguiente hito.
+   - **Por qué:** conservar trazabilidad de pendientes funcionales/técnicos y alinear expectativas de cierre.
+   - **Alternativas consideradas:** gestionar pendientes sólo en conversación o PRs.
+   - **Impacto / trade-offs:** mejora gobernanza del hito; requiere mantenimiento continuo de la checklist.
+
+3. **Priorizar robustez de operación antes de expansión visual**
+   - **Qué se decidió:** priorizar manejo de errores, persistencia de resultados en sesión y cobertura de pruebas sobre mejoras cosméticas de UI.
+   - **Por qué:** la confiabilidad del demo es condición base para validar todo el gateway frente a usuarios/contribuidores.
+   - **Alternativas consideradas:** iterar primero en diseño visual y componentes adicionales.
+   - **Impacto / trade-offs:** entrega visual más conservadora en el corto plazo; mejor base para evolución de producto.
+
+### Evidencia de avance
+
+- Checklist operativo del hito publicado y actualizado con progreso: `docs/hito5_checklist.md`.
+- Demo endurecido con manejo de errores HTTP accionables, persistencia de resultados en sesión y fallback de preview para archivos no imagen.
+- Cobertura unitaria agregada para utilidades críticas del demo (`build_extract_payload`, `_format_confidence`, `render_bboxes`).
+- README actualizado con referencia explícita al checklist de Hito 5 y estado de arranque.
+- Riesgos actuales: falta completar guía de troubleshooting dedicada y cerrar quality gates globales (`pytest -q`) en entorno con plugin async habilitado.
+- Próximo paso inmediato: publicar troubleshooting del demo y cerrar evidencia final de checks para declarar Hito 5 como cerrado.

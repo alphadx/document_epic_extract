@@ -38,6 +38,13 @@ def show_comparison(
             _show_result(image_bytes, result_b)
 
 
+def _format_confidence(confidence: float | None) -> str:
+    """Format confidence preserving valid `0.0` values."""
+    if confidence is None:
+        return "—"
+    return f"{confidence:.0%}"
+
+
 def _show_result(image_bytes: bytes, result: dict) -> None:
     tab_visual, tab_fields, tab_json = st.tabs(["🖼️ Visual", "📋 Fields", "{ } JSON"])
 
@@ -52,7 +59,7 @@ def _show_result(image_bytes: bytes, result: dict) -> None:
                     {
                         "Field": f.get("key"),
                         "Value": f.get("value"),
-                        "Confidence": f"{f['confidence']:.0%}" if f.get("confidence") else "—",
+                        "Confidence": _format_confidence(f.get("confidence")),
                     }
                     for f in fields
                 ]
