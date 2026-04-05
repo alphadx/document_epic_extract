@@ -450,3 +450,5 @@ Solo avanzar a Fase 1 cuando el equipo confirme que esta sección sigue vigente 
 ---
 
 *Última actualización: 2026-04-05 — Roadmap sincronizado con release estable v0.1.1*
+
+> Backlog operativo consolidado: ver `TODO.md`.
