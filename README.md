@@ -285,6 +285,13 @@ Para trazabilidad de decisiones por hito, ver [docs/milestone_decisions.md](docs
 Para checklist operativo de Fase 3 (LiteLLM + Prebuilt Engine), ver [docs/hito3_checklist.md](docs/hito3_checklist.md).
 Para checklist operativo de Fase 4 (Ejecución Local), ver [docs/hito4_checklist.md](docs/hito4_checklist.md).
 Para checklist operativo de Fase 5 (Demo Front-end), ver [docs/hito5_checklist.md](docs/hito5_checklist.md).
+Para checklist operativo de Fase 6 (Documentación & OSS), ver [docs/hito6_checklist.md](docs/hito6_checklist.md).
+Para guía operativa del demo, ver [docs/demo_troubleshooting.md](docs/demo_troubleshooting.md).
+Para guía de Custom Prebuilts, ver [docs/custom_prebuilts.md](docs/custom_prebuilts.md).
+Para checklist de release OSS, ver [docs/release_checklist.md](docs/release_checklist.md).
+Para política de versionado de contrato API, ver [docs/contract_versioning.md](docs/contract_versioning.md).
+Para plan de estabilización y release público, ver [docs/public_release_stabilization.md](docs/public_release_stabilization.md).
+Para evidencia del release candidate actual, ver [docs/release_rc_0.1.1-rc1.md](docs/release_rc_0.1.1-rc1.md).
 Para contrato final API↔Worker local, ver [docs/local_worker_contract.md](docs/local_worker_contract.md).
 
 - **Fase 0** — Base del repositorio: licencia, convenciones, DoD y análisis inicial de seguridad
@@ -296,12 +303,12 @@ Para contrato final API↔Worker local, ver [docs/local_worker_contract.md](docs
 - **Fase 6** — Documentación & Open Source Release
 
 
-### Estado de Hito 5 (avance)
+### Estado de Hito 5 (cerrado)
 
 - Checklist operativo de cierre publicado en `docs/hito5_checklist.md`.
 - Demo Streamlit endurecido con errores HTTP accionables, persistencia en sesión y fallback de preview para archivos no imagen.
 - Pruebas unitarias añadidas para helpers críticos del demo.
-- Pendientes de cierre: guía de troubleshooting dedicada, mensajes más guiados por tipo de error (`422`/`401`/`403`) y una prueba de integración de lógica UI sin red externa.
+- Quality gates del repositorio validados en verde (`ruff check .`, `pytest -q`).
 
 Comandos de verificación actuales:
 
@@ -319,6 +326,23 @@ pytest -q
 | `azure` | `prebuilt-document` | Soportado (vía adapter OCR) | Sí |
 | `llm_router` | `gpt-4o` / `claude-3-5-sonnet-20241022` | Soportado (vía LiteLLM) | Sí |
 | `local` | `smolvlm2-2.2b-instruct` | Soportado (requiere worker local) | No |
+
+### Estado de Hito 6 (cerrado)
+
+- Checklist operativo cerrado en `docs/hito6_checklist.md`.
+- Guías publicadas: Custom Prebuilts, troubleshooting demo, release checklist y versionado de contrato.
+- Hito preparado para transición al siguiente tramo de producto.
+
+### Siguiente tramo: estabilización/release público
+
+- Ejecutar proceso de estabilización con criterio Go/No-Go en `docs/public_release_stabilization.md`.
+- Release candidate `v0.1.1-rc1` ejecutado (GO); pendiente promoción a release estable.
+
+### Estado actual de estabilización
+
+- RC `v0.1.1-rc1` ejecutado con resultado **GO**.
+- Evidencia técnica y riesgos residuales documentados en `docs/release_rc_0.1.1-rc1.md`.
+- Próximo paso: promoción a release estable `v0.1.1`.
 
 
 ### Cierre de Hito 0 (resumen)
@@ -388,10 +412,12 @@ El pipeline de CI separa dos validaciones:
 
 - **lint-and-test**: ejecuta `ruff check .` + `pytest -q` en Python 3.11 y 3.12.
 - **contract-checks**: valida contrato OpenAPI (tests de contrato + snapshot de firma).
+- **release-readiness**: gate manual/tag para validar pre-release con `make release-readiness`.
 
 Comandos locales equivalentes:
 
 ```bash
+make release-readiness
 ruff check .
 pytest -q
 pytest -q tests/integration/test_openapi_contract.py tests/integration/test_openapi_signature_snapshot.py
@@ -404,8 +430,10 @@ git diff --exit-code tests/fixtures/openapi_signature.json
 
 Distribuido bajo licencia **MIT**. Ver [LICENSE](LICENSE) para más información.
 
+## Changelog
+
+Ver historial de cambios en [CHANGELOG.md](CHANGELOG.md).
+
 ---
 
 *Construido con ❤️ por la comunidad — contributions welcome!*
-
-

@@ -189,7 +189,8 @@ Estado: Cerrado (operativo)
 ## Hito 5 — Demo Front-end (Streamlit)
 
 Fecha de inicio: 2026-04-05  
-Estado: En progreso
+Fecha de cierre: 2026-04-05  
+Estado: Cerrado (operativo)
 
 ### Decisiones tomadas (arranque)
 
@@ -216,6 +217,73 @@ Estado: En progreso
 - Checklist operativo del hito publicado y actualizado con progreso: `docs/hito5_checklist.md`.
 - Demo endurecido con manejo de errores HTTP accionables, persistencia de resultados en sesión y fallback de preview para archivos no imagen.
 - Cobertura unitaria agregada para utilidades críticas del demo (`build_extract_payload`, `_format_confidence`, `render_bboxes`).
-- README actualizado con referencia explícita al checklist de Hito 5 y estado de arranque.
-- Riesgos actuales: falta completar guía de troubleshooting dedicada y cerrar quality gates globales (`pytest -q`) en entorno con plugin async habilitado.
-- Próximo paso inmediato: publicar troubleshooting del demo y cerrar evidencia final de checks para declarar Hito 5 como cerrado.
+- README actualizado con referencia explícita al checklist de Hito 5 y estado de cierre.
+- Guía operativa del demo publicada en `docs/demo_troubleshooting.md`.
+- Checks de calidad en verde con entorno dev instalado: `ruff check .` y `pytest -q`.
+- Riesgos post-cierre: mejorar UX de comparativas con datasets de evaluación dedicados.
+- Siguiente hito habilitado: Fase 6 — Documentación y Open Source.
+
+## Hito 6 — Documentación & Open Source
+
+Fecha de inicio: 2026-04-05  
+Fecha de cierre: 2026-04-05  
+Estado: Cerrado (operativo)
+
+### Decisiones tomadas (arranque)
+
+1. **Iniciar Hito 6 con checklist formal para evitar cierre ambiguo**
+   - **Qué se decidió:** crear `docs/hito6_checklist.md` con DoD, riesgos y criterios explícitos de salida.
+   - **Por qué:** evitar cabos sueltos de documentación y garantizar trazabilidad del release OSS.
+   - **Alternativas consideradas:** gestionar cierre sólo con notas de PR y README.
+   - **Impacto / trade-offs:** mejor gobernanza del hito; exige mantenimiento continuo del checklist.
+
+2. **Cerrar primero brechas de documentación operativa antes de empaquetado**
+   - **Qué se decidió:** priorizar guías faltantes (troubleshooting demo, Custom Prebuilts y release checklist) antes de evaluar publicación en PyPI.
+   - **Por qué:** reduce soporte reactivo y habilita adopción técnica por terceros con menor fricción.
+   - **Alternativas consideradas:** priorizar release package temprano sin documentación completa.
+   - **Impacto / trade-offs:** avance más sólido pero ligeramente más lento en “time-to-release”.
+
+### Evidencia de cierre
+
+- Checklist operativo de Hito 6 publicado: `docs/hito6_checklist.md`.
+- Guía dedicada de demo/troubleshooting publicada: `docs/demo_troubleshooting.md`.
+- Guía de Custom Prebuilts publicada: `docs/custom_prebuilts.md`.
+- Checklist de release OSS publicado: `docs/release_checklist.md`.
+- Política de versionado de contrato publicada: `docs/contract_versioning.md`.
+- README actualizado con estado final del hito y enlaces a guías.
+- Checks de calidad en verde: `ruff check .` y `pytest -q`.
+- Riesgos post-cierre: estrategia de publicación en PyPI pendiente de decisión del equipo.
+- Siguiente hito habilitado: fase de estabilización y release público.
+
+## Tramo siguiente — Estabilización y Release Público
+
+Fecha de inicio: 2026-04-05  
+Fecha de cierre: 2026-04-05  
+Estado: Cerrado (RC listo)
+
+### Decisiones tomadas (arranque)
+
+1. **Aplicar gate explícito Go/No-Go antes de release público**
+   - **Qué se decidió:** publicar `docs/public_release_stabilization.md` con criterios objetivos de salida.
+   - **Por qué:** evitar releases por percepción y exigir evidencia técnica reproducible.
+   - **Alternativas consideradas:** promover release directamente desde cierre documental.
+   - **Impacto / trade-offs:** mayor control de riesgo; agrega una fase corta adicional antes de publicar.
+
+2. **Usar release candidate como paso obligatorio**
+   - **Qué se decidió:** establecer paso `vX.Y.Z-rc1` previo al tag final.
+   - **Por qué:** detectar regresiones de última milla en API/demo/worker antes de congelar versión.
+   - **Alternativas consideradas:** publicar versión final sin RC.
+   - **Impacto / trade-offs:** incrementa disciplina operativa; extiende levemente el ciclo de release.
+
+### Evidencia de avance
+
+- Plan de estabilización publicado: `docs/public_release_stabilization.md`.
+- Checklist de release OSS actualizado con referencia a estabilización.
+- README actualizado para reflejar el tramo de estabilización/release público.
+- Automatización de gate pre-release añadida en `make release-readiness` y `scripts/release_readiness.sh`.
+- Workflow dedicado de release readiness añadido en `.github/workflows/release-readiness.yml`.
+- Changelog base publicado en `CHANGELOG.md` para preparar notas de release.
+- RC `v0.1.1-rc1` ejecutado con decisión GO y evidencia en `docs/release_rc_0.1.1-rc1.md`.
+- Versión del paquete actualizada a `0.1.1rc1` para el corte RC.
+- `plan.md` sincronizado con estado real de fases (F3–F6 cerradas y F7 abierta para release estable).
+- Siguiente hito habilitado: publicación estable `v0.1.1` y post-release.
