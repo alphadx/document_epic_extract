@@ -284,6 +284,7 @@ Estado: Cerrado (RC listo)
 - Workflow dedicado de release readiness añadido en `.github/workflows/release-readiness.yml`.
 - Changelog base publicado en `CHANGELOG.md` para preparar notas de release.
 - RC `v0.1.1-rc1` ejecutado con decisión GO y evidencia en `docs/release_rc_0.1.1-rc1.md`.
-- Versión del paquete actualizada a `0.1.1rc1` para el corte RC.
+- Versión del paquete promovida de `0.1.1rc1` a `0.1.1` para release estable.
+- Release estable `v0.1.1` ejecutado con evidencia en `docs/release_v0.1.1.md`.
 - `plan.md` sincronizado con estado real de fases (F3–F6 cerradas y F7 abierta para release estable).
-- Siguiente hito habilitado: publicación estable `v0.1.1` y post-release.
+- Siguiente hito habilitado: post-release (seguimiento de riesgos + canal de publicación PyPI/TestPyPI).

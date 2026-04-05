@@ -24,15 +24,18 @@
 - [x] Crear tag anotado (`git tag -a vX.Y.Z -m "release vX.Y.Z"`).
 
 ## 4) Publicación (opcional)
-- [ ] Construir distribución (`python -m build`).
-- [ ] Verificar artefactos (`twine check dist/*`).
+- [x] Construir distribución (`python -m build`).
+- [x] Verificar artefactos (`twine check dist/*`).
 - [ ] Publicar (TestPyPI/PyPI) según estrategia del equipo.
 
 ## 5) Post-release
-- [ ] Publicar notas de release/changelog.
+- [x] Publicar notas de release/changelog.
 - [ ] Registrar riesgos conocidos y mitigaciones.
 - [ ] Confirmar que main queda en verde tras merge.
 - [ ] Abrir plan de estabilización siguiente ciclo (si quedan riesgos altos/medios).
 
 ## Evidencia de ejecución (RC actual)
 - Log de ejecución y decisión GO/No-GO: `docs/release_rc_0.1.1-rc1.md`.
+
+## Evidencia de ejecución (release estable)
+- Log de release estable: `docs/release_v0.1.1.md`.

@@ -292,6 +292,7 @@ Para checklist de release OSS, ver [docs/release_checklist.md](docs/release_chec
 Para política de versionado de contrato API, ver [docs/contract_versioning.md](docs/contract_versioning.md).
 Para plan de estabilización y release público, ver [docs/public_release_stabilization.md](docs/public_release_stabilization.md).
 Para evidencia del release candidate actual, ver [docs/release_rc_0.1.1-rc1.md](docs/release_rc_0.1.1-rc1.md).
+Para evidencia del release estable, ver [docs/release_v0.1.1.md](docs/release_v0.1.1.md).
 Para contrato final API↔Worker local, ver [docs/local_worker_contract.md](docs/local_worker_contract.md).
 
 - **Fase 0** — Base del repositorio: licencia, convenciones, DoD y análisis inicial de seguridad
@@ -336,13 +337,14 @@ pytest -q
 ### Siguiente tramo: estabilización/release público
 
 - Ejecutar proceso de estabilización con criterio Go/No-Go en `docs/public_release_stabilization.md`.
-- Release candidate `v0.1.1-rc1` ejecutado (GO); pendiente promoción a release estable.
+- RC `v0.1.1-rc1` y release estable `v0.1.1` ejecutados en estado GO.
 
 ### Estado actual de estabilización
 
 - RC `v0.1.1-rc1` ejecutado con resultado **GO**.
-- Evidencia técnica y riesgos residuales documentados en `docs/release_rc_0.1.1-rc1.md`.
-- Próximo paso: promoción a release estable `v0.1.1`.
+- Release estable `v0.1.1` ejecutado con resultado **GO**.
+- Evidencia técnica y riesgos residuales en `docs/release_rc_0.1.1-rc1.md` y `docs/release_v0.1.1.md`.
+- Próximo paso: post-release (seguimiento de riesgos + decisión de canal PyPI/TestPyPI).
 
 
 ### Cierre de Hito 0 (resumen)

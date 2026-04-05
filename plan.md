@@ -398,7 +398,8 @@ document_epic_extract/
 ### Fase 7 — Estabilización y Release Público
 - [x] Definir gate reproducible de pre-release (`make release-readiness`).
 - [x] Ejecutar release candidate `v0.1.1-rc1` con decisión Go/No-Go documentada.
-- [ ] Promoción a versión estable (`v0.1.1`) y notas finales de release.
+- [x] Promoción a versión estable (`v0.1.1`) y notas finales de release.
+- [ ] Seguimiento post-release y decisión de publicación en PyPI/TestPyPI.
 
 ---
 
@@ -448,4 +449,4 @@ Solo avanzar a Fase 1 cuando el equipo confirme que esta sección sigue vigente 
 
 ---
 
-*Última actualización: 2026-04-05 — Roadmap sincronizado con RC v0.1.1-rc1*
+*Última actualización: 2026-04-05 — Roadmap sincronizado con release estable v0.1.1*

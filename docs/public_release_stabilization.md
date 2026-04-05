@@ -63,6 +63,6 @@ Definir un proceso corto, verificable y repetible para pasar del estado “docum
 
 ## Ejecución más reciente
 
-- RC ejecutado: `v0.1.1-rc1`.
-- Resultado: **GO para RC**.
-- Evidencia: `docs/release_rc_0.1.1-rc1.md`.
+- RC ejecutado: `v0.1.1-rc1` (**GO**).
+- Release estable ejecutado: `v0.1.1` (**GO**).
+- Evidencias: `docs/release_rc_0.1.1-rc1.md` y `docs/release_v0.1.1.md`.

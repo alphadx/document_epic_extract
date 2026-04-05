@@ -16,6 +16,18 @@ y el versionado sigue [SemVer](https://semver.org/lang/es/).
 ### Fixed
 - N/A.
 
+## [0.1.1] - 2026-04-05
+
+### Added
+- Evidencia de release estable documentada (`docs/release_v0.1.1.md`).
+
+### Changed
+- Promoción de versión desde `0.1.1rc1` a `0.1.1`.
+- Consolidación de checklist de release con evidencia de build/twine.
+
+### Fixed
+- N/A.
+
 ## [0.1.1-rc1] - 2026-04-05
 
 ### Added
