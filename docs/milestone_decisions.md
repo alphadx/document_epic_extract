@@ -146,3 +146,42 @@ Estado: Cerrado
 - Checks ejecutados: `ruff check .`, `pytest -q`, `make openapi-signature`, `git diff --exit-code tests/fixtures/openapi_signature.json`.
 - Riesgos pendientes: monitoreo en producción de variabilidad por proveedor LLM; circuit breaker distribuido en despliegues multi-réplica.
 - Siguiente hito habilitado: Fase 4 — Ejecución Local (SmolVLM2).
+
+
+## Hito 4 — Ejecución Local (SmolVLM2)
+
+Fecha de inicio: 2026-04-05  
+Fecha de cierre: 2026-04-05  
+Estado: Cerrado (operativo)
+
+### Decisiones tomadas (arranque)
+
+1. **No cerrar Hito 4 hasta tener flujo `provider=local` end-to-end verificable**
+   - **Qué se decidió:** exigir implementación funcional del `SmolVLM2Adapter` con pruebas unitarias e integración de `POST /extract`.
+   - **Por qué:** evitar cierre documental sin capacidad operativa real del camino local.
+   - **Alternativas consideradas:** cerrar “parcial” con stub + documentación.
+   - **Impacto / trade-offs:** mayor rigor de cierre; incrementa el trabajo inicial de pruebas y hardening.
+
+2. **Formalizar DoD del hito en checklist dedicado**
+   - **Qué se decidió:** crear `docs/hito4_checklist.md` con alcance, criterios de validación y riesgos.
+   - **Por qué:** reducir ambigüedad y dejar trazabilidad explícita de pendientes.
+   - **Alternativas consideradas:** gestionar el avance sólo en PRs/conversación.
+   - **Impacto / trade-offs:** mejor gobernanza del hito; requiere disciplina para mantener el checklist al día.
+
+3. **Priorizar SmolVLM2 antes de FLAN-T5**
+   - **Qué se decidió:** abordar primero `SmolVLM2Adapter` para consolidar contrato API ↔ Worker y reutilizar ese patrón para otros modelos locales.
+   - **Por qué:** reduce riesgo técnico al validar temprano la integración local más representativa del flujo multimodal.
+   - **Alternativas consideradas:** implementar simultáneamente SmolVLM2 + FLAN-T5.
+   - **Impacto / trade-offs:** entrega incremental más controlada; FLAN-T5 queda explícitamente en siguiente tramo del hito.
+
+### Evidencia de avance
+
+- Documento de arranque y DoD de Hito 4: `docs/hito4_checklist.md`.
+- `SmolVLM2Adapter` implementado con llamada HTTP asíncrona al Worker, validación de contrato y manejo de errores.
+- Cobertura de pruebas para `provider=local`: unit tests del adapter + integración de `POST /extract` con mock payload.
+- Worker local implementado en `adapters/local/worker_app.py` con contrato estable de `/infer`.
+- Contrato final API↔Worker y operación CPU/GPU documentados en `docs/local_worker_contract.md` y `README.md`.
+- Validación end-to-end sin mock payload: API local (`/extract`) → Worker real (`/infer`) en tests de integración.
+- Checks de calidad en verde: `ruff check .` y `pytest -q`.
+- Riesgos post-cierre: tuning de rendimiento en GPU y pruebas de carga para escenario productivo.
+- Siguiente hito habilitado: Fase 5 — Demo Front-end.
