@@ -94,3 +94,5 @@ Solo avanzar cuando todos los checkboxes de DoD estén completados y la evidenci
 - Se incorporó script de evidencia `scripts/collect_ocr_live_evidence.py` para levantar bitácora reproducible de preparación de pruebas cloud reales (AWS/GCP/Azure).
 - Se generó evidencia del entorno actual en `docs/ocr_live_evidence_2026-04-05.md`.
 - Resultado del entorno de ejecución actual: escenarios live marcados como `SKIPPED` cuando faltan credenciales/requisitos de red por proveedor.
+
+- Se publicó plantilla de ejecución controlada en `docs/plantilla_corrida_live_ocr.md` para estandarizar evidencia por escenario/proveedor.
