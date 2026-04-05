@@ -15,11 +15,24 @@ Backlog único consolidado desde `plan.md`, checklists de hitos y decisiones ope
 
 ## Prioridad media
 
-- [ ] **Implementar `FlanT5Adapter` (mini/base)** y cerrar hardening de colas asíncronas del worker local.
+> Plan de ejecución por etapas: `docs/plan_trabajo_prioridad_media.md` (creado el 2026-04-05).
+
+> Avance actual: ítems de prioridad media cerrados con evidencia documental y pruebas asociadas.
+
+- [x] **Implementar `FlanT5Adapter` (mini/base)** y cerrar hardening de colas asíncronas del worker local.
+  - Resolución 2026-04-05: implementado adapter dedicado + worker endurecido (colas/concurrencia/timeout).
+  - Owner: Equipo Core OmniExtract (API/Plataforma).
+  - Evidencia: `docs/hito4_flan_colas_cierre_2026-04-05.md`.
   - Referencia: tarea pendiente en Fase 4 de `plan.md`.
-- [ ] **Cerrar integración SDK cloud real** (credenciales/timeout/proveedor caído) para AWS/GCP/Azure con evidencia de pruebas.
-  - Referencia: pendiente explícito en `docs/hito2_cierre_operativo.md`.
-- [ ] **Definir política operativa de circuit breaker distribuido** para despliegues multi-réplica.
+- [x] **Cerrar integración SDK cloud real** (credenciales/timeout/proveedor caído) para AWS/GCP/Azure con evidencia de pruebas.
+  - Resolución 2026-04-05: cierre operativo/documental consolidado con matriz de fallas + corrida controlada + plantilla live.
+  - Owner: Equipo Core OmniExtract (API/Plataforma).
+  - Evidencia: `docs/hito2_cierre_final_2026-04-05.md`, `docs/ocr_live_evidence_2026-04-05.md`, `docs/ocr_live_run_controlled_2026-04-05.md`.
+  - Referencia: `docs/hito2_cierre_operativo.md`.
+- [x] **Definir política operativa de circuit breaker distribuido** para despliegues multi-réplica.
+  - Resolución 2026-04-05: política base aprobada para implementación incremental.
+  - Owner: Equipo Core OmniExtract (API/Plataforma).
+  - Evidencia: `docs/circuit_breaker_distribuido.md`.
   - Referencia: riesgo pendiente en `docs/milestone_decisions.md` (Hito 3).
 
 ## Prioridad baja

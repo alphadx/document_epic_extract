@@ -38,7 +38,13 @@ Implementar inferencia local robusta para documentos con `provider=local`, inici
 ## Riesgos de seguimiento (no bloqueantes para arranque)
 - Coste de memoria/latencia en entornos sin GPU.
 - Variabilidad de desempeño según hardware local.
-- Gestión de colas para cargas concurrentes altas (etapa posterior).
+- Gestión de colas para cargas concurrentes altas (cerrada en addendum FLAN/colas 2026-04-05).
 
 ## Criterio para avanzar al siguiente hito
 Hito 4 se considera cerrado cuando `provider=local` funcione end-to-end con pruebas automatizadas, documentación operativa CPU/GPU y sin tareas abiertas del DoD.
+
+
+## Addendum (2026-04-05) — FLAN-T5 + colas
+
+- Se incorpora cierre formal del subtramo local FLAN-T5 + hardening de colas en `docs/hito4_flan_colas_cierre_2026-04-05.md`.
+- Estado del ítem local de prioridad media: **cerrado**.

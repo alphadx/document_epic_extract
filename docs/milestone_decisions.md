@@ -87,7 +87,8 @@ Estado: Cerrado
 ## Hito 2 — Adaptadores OCR Cloud
 
 Fecha de inicio: 2026-04-04  
-Estado: En progreso
+Fecha de cierre: 2026-04-05  
+Estado: Cerrado
 
 ### Decisiones tomadas (arranque)
 
@@ -116,6 +117,7 @@ Estado: En progreso
 - Riesgos actuales: falta completar conexión SDK cloud real (hoy se habilitó mapeo funcional basado en payload proveedor/mock).
 - Próximo paso inmediato: cerrar integración SDK real por proveedor (credenciales/timeout/proveedor caído) y conservar quality gates en verde.
 - Avance documental adicional: README actualizado con variables de entorno OCR cloud y ejemplo de uso en modo mock payload.
+- Evidencia final de cierre: `docs/hito2_cierre_final_2026-04-05.md`.
 
 ## Hito 3 — Meta-Gateway LLM + LiteLLM + Prebuilt Engine
 
@@ -148,6 +150,13 @@ Estado: Cerrado
 - Checks ejecutados: `ruff check .`, `pytest -q`, `make openapi-signature`, `git diff --exit-code tests/fixtures/openapi_signature.json`.
 - Riesgos pendientes: monitoreo en producción de variabilidad por proveedor LLM; circuit breaker distribuido en despliegues multi-réplica.
 - Siguiente hito habilitado: Fase 4 — Ejecución Local (SmolVLM2).
+
+### Addendum operativo (2026-04-05)
+
+- **Qué se decidió:** establecer política operativa de circuit breaker distribuido con estado compartido (Redis), transición `closed/open/half_open`, runbook y métricas mínimas.
+- **Por qué:** eliminar divergencia de estado entre réplicas y reducir cascadas de fallo en proveedores externos.
+- **Evidencia:** `docs/circuit_breaker_distribuido.md`.
+- **Estado del riesgo:** mitigación definida a nivel operativo; pendiente implementación completa del store distribuido en runtime.
 
 
 ## Hito 4 — Ejecución Local (SmolVLM2)
@@ -186,6 +195,7 @@ Estado: Cerrado (operativo)
 - Validación end-to-end sin mock payload: API local (`/extract`) → Worker real (`/infer`) en tests de integración.
 - Checks de calidad en verde: `ruff check .` y `pytest -q`.
 - Riesgos post-cierre: tuning de rendimiento en GPU y pruebas de carga para escenario productivo.
+- Addendum de cierre FLAN/colas: `docs/hito4_flan_colas_cierre_2026-04-05.md`.
 - Siguiente hito habilitado: Fase 5 — Demo Front-end.
 
 ## Hito 5 — Demo Front-end (Streamlit)
