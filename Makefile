@@ -1,4 +1,4 @@
-.PHONY: test lint openapi-signature cb-consistency release-readiness package-check publish-testpypi-preflight publish-testpypi
+.PHONY: test lint openapi-signature cb-consistency release-readiness package-check publish-testpypi-preflight publish-testpypi r701-observe r701-final-cut r701-sync-snapshot
 
 lint:
 	ruff check .
@@ -29,3 +29,18 @@ publish-testpypi-preflight:
 
 publish-testpypi:
 	bash scripts/testpypi_publish_gate.sh --execute
+
+
+R701_ARGS ?=
+R701_CUT_DATE ?= 2026-04-12
+R701_WINDOW_START ?= 2026-04-06
+R701_WINDOW_END ?= 2026-04-12
+
+r701-observe:
+	R701_WINDOW_START=$(R701_WINDOW_START) R701_WINDOW_END=$(R701_WINDOW_END) bash scripts/r701_observation_run.sh --append $(R701_ARGS)
+
+r701-sync-snapshot:
+	python scripts/r701_sync_snapshot.py --snapshot-date $(R701_CUT_DATE) --window-start $(R701_WINDOW_START) --window-end $(R701_WINDOW_END)
+
+r701-final-cut:
+	python scripts/r701_final_cut.py --today $(R701_CUT_DATE) --window-start $(R701_WINDOW_START) --window-end $(R701_WINDOW_END)
