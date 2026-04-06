@@ -42,7 +42,7 @@ Este índice organiza toda la documentación por objetivo. El `README.md` princi
 - [Hito 4 — checklist](hito4_checklist.md) y [contrato API↔worker local](local_worker_contract.md)
 - [Hito 5 — checklist](hito5_checklist.md)
 - [Hito 6 — checklist](hito6_checklist.md)
-- [Hito 7 — checklist](hito7_checklist.md), [riesgos](hito7_risk_register.md), [decisión de distribución](hito7_distribution_decision.md), [validación de empaquetado](hito7_packaging_validation.md), [acta de cierre](hito7_cierre.md)
+- [Hito 7 — checklist](hito7_checklist.md), [riesgos](hito7_risk_register.md), [bitácora de observabilidad R7-01](hito7_r701_observability_log.md), [decisión de distribución](hito7_distribution_decision.md), [validación de empaquetado](hito7_packaging_validation.md), [acta de cierre](hito7_cierre.md)
 
 ## 6) Regla editorial de documentación
 
