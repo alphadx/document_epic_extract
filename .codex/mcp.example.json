@@ -1,0 +1,20 @@
+{
+  "mcpServers": {
+    "github": {
+      "enabled": true,
+      "purpose": "PRs, issues y revisión de cambios remotos"
+    },
+    "sequential-thinking": {
+      "enabled": false,
+      "purpose": "Planificación compleja por pasos"
+    },
+    "docs-search": {
+      "enabled": false,
+      "purpose": "Consulta de documentación oficial"
+    }
+  },
+  "policy": {
+    "max_enabled_servers": 3,
+    "enable_minimum_required": true
+  }
+}
