@@ -1,0 +1,23 @@
+{
+  "pre_commit": [
+    {
+      "name": "unit-tests-focalizados",
+      "run": "pytest -q tests/unit",
+      "when": "python_changes"
+    }
+  ],
+  "pre_push": [
+    {
+      "name": "openapi-contract-check",
+      "run": "pytest -q tests/integration/test_openapi_contract.py",
+      "when": "api_or_schema_changes"
+    }
+  ],
+  "post_edit": [
+    {
+      "name": "fast-lint",
+      "run": "ruff check .",
+      "when": "python_changes"
+    }
+  ]
+}
